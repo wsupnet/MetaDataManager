@@ -56,8 +56,12 @@ namespace MetaDataManager.Controllers
         }
 
         // GET: Albums/Create
-        public ActionResult Create(int artistId)
+        [HttpGet]
+        public ActionResult Create(int? artistId)
         {
+            Album album = new Album();
+
+            ViewBag.ArtistId = artistId;
 
             return View();
         }
@@ -67,11 +71,13 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Artist,Year,Tracks,Genre")] Album album)
+        public ActionResult Create([Bind(Include = "Id,Name,Artists,Year,Tracks,Genre")] Album album)
         {
             if (ModelState.IsValid)
             {
-                //album.ArtistId = db.Artists.Where(art => art.Id == album.ArtistId).FirstOrDefault();
+                //album.ArtistId = db.Artists.Where(x => x.Id == album.ArtistId).FirstOrDefault();
+                ViewBag.ArtistId = album.ArtistId;
+                //album.ArtistId = db.Artists.Where(x => x.Id == album.ArtistId).FirstOrDefault();
                 db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");

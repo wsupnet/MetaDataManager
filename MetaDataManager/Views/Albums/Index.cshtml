@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.ArtistId = "artistId";
 }
 
 <h2>Index</h2>
@@ -14,18 +15,18 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Artist)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Year)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Tracks)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Genre)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -34,18 +35,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Artist)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Year)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Tracks)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Genre)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

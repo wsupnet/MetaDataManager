@@ -188,6 +188,14 @@
     <Compile Include="Migrations\201801161640579_AddedWebsiteToArtistModel.Designer.cs">
       <DependentUpon>201801161640579_AddedWebsiteToArtistModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801260114120_UpdatedAlbumModel.cs" />
+    <Compile Include="Migrations\201801260114120_UpdatedAlbumModel.Designer.cs">
+      <DependentUpon>201801260114120_UpdatedAlbumModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801260150364_UpdatedAlbumModel1.cs" />
+    <Compile Include="Migrations\201801260150364_UpdatedAlbumModel1.Designer.cs">
+      <DependentUpon>201801260150364_UpdatedAlbumModel1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -287,6 +295,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801161640579_AddedWebsiteToArtistModel.resx">
       <DependentUpon>201801161640579_AddedWebsiteToArtistModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801260114120_UpdatedAlbumModel.resx">
+      <DependentUpon>201801260114120_UpdatedAlbumModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801260150364_UpdatedAlbumModel1.resx">
+      <DependentUpon>201801260150364_UpdatedAlbumModel1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
