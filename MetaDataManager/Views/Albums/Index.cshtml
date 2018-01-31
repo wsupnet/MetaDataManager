@@ -2,13 +2,13 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.ArtistId = "artistId";
+    //ViewBag.ArtistId = "artistId";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { artistId = ViewBag.ArtistId })
 </p>
 <table class="table">
     <tr>
