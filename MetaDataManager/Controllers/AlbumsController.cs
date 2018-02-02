@@ -16,24 +16,13 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Albums
-        public ActionResult Index(int artistId)
+        public ActionResult Index(int? artistId)
         {
 
-            //MetaDataManagerContext metaDataManagerContext = new MetaDataManagerContext();
-            //List<Album> albums = metaDataManagerContext.Albums.Where(x => x.Id == artistId).ToList();
-
-            //return View(albums);
-
-            //if (artistId > 0)
-            //{
-            //    ViewBag.ArtistId = artistId;
-
-            //    return View(db.Albums.Where(x => x.Artist).ToList());
-            //}
-            //else
-            //{
-            //    return View(db.Albums.ToList());
-            //}
+            if (artistId == null)
+            {
+                return View(db.Albums.ToList());
+            }
 
             ViewBag.ArtistId = artistId;
 
@@ -150,6 +139,11 @@ namespace MetaDataManager.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult AddDSong(int Id)
+        {
+            return RedirectToAction("Index", "Songs", new { artistId = Id });
         }
     }
 }
