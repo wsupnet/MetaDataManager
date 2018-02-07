@@ -17,9 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.YearFormed)
         </th>
-        @*<th>
+        <th>
             @Html.DisplayNameFor(model => model.Website)
-        </th>*@
+        </th>
         <th></th>
     </tr>
 
@@ -32,17 +32,7 @@
             @Html.DisplayFor(modelItem => item.YearFormed)
         </td>
         <td>
-            @*<a href="item.Website">View</a>*@
             @Html.DisplayFor(modelItem => item.Website)
-            @*<div>@Html.DisplayFor(modelItem => item.Name)'s</div>*@
-            @*@Html.ActionLink("Official Site", "RedirectToExternalSite", new { id = item.Id})*@
-            @*@Url.Action("RedirectToExternalSite", "Artists", null, "http")*@
-            @*@Html.ActionLink("Official Site", "RedirectToExternalSite", "Artists", "http", "www.google.com", "_blank", new { id = item.Id }, new { @class = "Artist" })*@
-            @*<a href="@model.propertynameforlink" target="_blank">Artist Website</a>" +*@
-            @*<a href="item.Website" target="_blank">Artist Website</a>
-            <a href="@Html.Raw(item.Website)" target="_blank">Artist Website</a>
-            <a href="@Html.Raw(HttpUtility.HtmlDecode(item.Website))" target="_blank">Website</a>
-            <a href="www.twentyonepilots.com" target="_blank">Website</a>*@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

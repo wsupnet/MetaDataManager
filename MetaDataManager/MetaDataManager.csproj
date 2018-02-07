@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.Designer.cs">
       <DependentUpon>201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802070134556_UpdatedArtistModel1.cs" />
+    <Compile Include="Migrations\201802070134556_UpdatedArtistModel1.Designer.cs">
+      <DependentUpon>201802070134556_UpdatedArtistModel1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -325,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.resx">
       <DependentUpon>201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070134556_UpdatedArtistModel1.resx">
+      <DependentUpon>201802070134556_UpdatedArtistModel1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

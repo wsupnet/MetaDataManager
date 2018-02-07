@@ -28,6 +28,11 @@ namespace MetaDataManager.Controllers
         // GET: Artists/Details/5
         public ActionResult Details(int? id)
         {
+            Artist model = new Artist();
+            if (model.Description == null)
+            {
+                ViewBag.HtmlStr = "The artist does not have a bio yet.";
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -51,7 +56,7 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,YearFormed,Website")] Artist artist)
+        public ActionResult Create([Bind(Include = "Id,Name,YearFormed,Website,Description")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +88,7 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,YearFormed,Website")] Artist artist)
+        public ActionResult Edit([Bind(Include = "Id,Name,YearFormed,Website,Description")] Artist artist)
         {
             if (ModelState.IsValid)
             {
