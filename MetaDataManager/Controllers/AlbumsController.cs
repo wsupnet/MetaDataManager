@@ -64,9 +64,6 @@ namespace MetaDataManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                //album.ArtistId = db.Artists.Where(x => x.Id == album.ArtistId).FirstOrDefault();
-                //ViewBag.ArtistId = album.ArtistId;
-                //album.ArtistId = db.Artists.Where(x => x.Id == album.ArtistId).FirstOrDefault();
                 db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { artistId = album.ArtistId });

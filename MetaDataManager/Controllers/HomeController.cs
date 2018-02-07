@@ -32,13 +32,6 @@ namespace MetaDataManager.Controllers
         static ClientCredentialsAuth auth;
         public async Task<ActionResult> Index()
         {
-
-            //string trackTitle = "Back In Black";
-            //string trackArtist = "ACDC";
-            //string url = string.Format("https://api.spotify.com/v1/search?q={0} {1}&type=track&market=US&limit=10&offset=0", trackTitle, trackArtist);
-
-            //var jsonData = GetTrackInfo(url);
-
             //Create the auth object
             auth = new ClientCredentialsAuth()
             {
@@ -60,7 +53,7 @@ namespace MetaDataManager.Controllers
 
             //SearchItem track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
             //var track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
-            var track = spotify.SearchItems("bts", SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
+            var track = spotify.SearchItems("journey", SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
 
 
             ViewData["ArtistsJson"] = JsonConvert.SerializeObject(track.Artists);
