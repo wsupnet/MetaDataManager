@@ -65,12 +65,8 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\dotNETSpotifyWebAPI.1.0.2\lib\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SpotifyWebAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\dotNETSpotifyWebAPI.1.0.2\lib\SpotifyWebAPI.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -216,11 +212,15 @@
     <Compile Include="Migrations\201801260150364_UpdatedAlbumModel1.Designer.cs">
       <DependentUpon>201801260150364_UpdatedAlbumModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.cs" />
+    <Compile Include="Migrations\201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.Designer.cs">
+      <DependentUpon>201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
-    <Compile Include="Models\Scope.cs" />
     <Compile Include="Models\Song.cs" />
+    <Compile Include="Models\SpotifyToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801260150364_UpdatedAlbumModel1.resx">
       <DependentUpon>201801260150364_UpdatedAlbumModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.resx">
+      <DependentUpon>201802070040338_UpdatedSongModelAndConnectedAlbumsToSongs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -141,9 +141,9 @@ namespace MetaDataManager.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult AddDSong(int Id)
+        public ActionResult AddSong(int Id)
         {
-            return RedirectToAction("Index", "Songs", new { artistId = Id });
+            return RedirectToAction("Index", "Songs", new { albumId = Id });
         }
     }
 }
