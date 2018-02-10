@@ -36,9 +36,9 @@ namespace MetaDataManager.Controllers
             auth = new ClientCredentialsAuth()
             {
                 //Your client Id
-                ClientId = "d465cd5175d04b038cca6f1679643396",
+                ClientId = "CLIENT_ID",
                 //Your client secret UNSECURE!!
-                ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
+                ClientSecret = "CLIENT_SECRET_ID",
                 //How many permissions we need?
                 Scope = Scope.UserReadPrivate,
             };
