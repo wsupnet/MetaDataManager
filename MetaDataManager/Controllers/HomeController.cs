@@ -22,43 +22,59 @@ namespace MetaDataManager.Controllers
 {
     public class HomeController : Controller
     {
-
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
         //private static SpotifyWebAPI _spotify;
         static ClientCredentialsAuth auth;
-        public async Task<ActionResult> Index()
+
+        [HttpGet]
+        public ActionResult Index()
         {
-            //Create the auth object
-            auth = new ClientCredentialsAuth()
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index(ArtistNameModel artistNameModel)
+        {
+            if (ModelState.IsValid)
             {
-                //Your client Id
-                ClientId = "CLIENT_ID",
-                //Your client secret UNSECURE!!
-                ClientSecret = "CLIENT_SECRET_ID",
-                //How many permissions we need?
-                Scope = Scope.UserReadPrivate,
-            };
-            //With this token object, we now can make calls
-            Token token = auth.DoAuth();
-            var spotify = new SpotifyWebAPI()
-            {
-                TokenType = token.TokenType,
-                AccessToken = token.AccessToken,
-                UseAuth = true
-            };
 
-            //SearchItem track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
-            //var track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
-            var track = spotify.SearchItems("journey", SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
+                //Create the auth object
+                auth = new ClientCredentialsAuth()
+                {
+                    //Your client Id
+                    ClientId = "CLIENT_ID_HERE",
+                    //Your client secret UNSECURE!!
+                    ClientSecret = "CLIENT_SECRET_HERE",
+                    //How many permissions we need?
+                    Scope = Scope.UserReadPrivate,
+                };
+
+                //With this token object, we now can make calls
+                Token token = auth.DoAuth();
+                var spotify = new SpotifyWebAPI()
+                {
+                    TokenType = token.TokenType,
+                    AccessToken = token.AccessToken,
+                    UseAuth = true
+                };
+
+                //SearchItem track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
+                //var track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
+                var track = spotify.SearchItems(artistNameModel.ArtistName, SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
+                var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track | SpotifyAPI.Web.Enums.SearchType.Playlist);
+
+                if (!string.IsNullOrEmpty(artistNameModel.SongName))
+                {
+                    ViewData["SongJson"] = JsonConvert.SerializeObject(songName.Tracks);
+                    ViewData["Songs"] = songName.Tracks.Items.ToList();
+                }
+                else if (!string.IsNullOrEmpty(artistNameModel.ArtistName))
+                {
+                    ViewData["ArtistsJson"] = JsonConvert.SerializeObject(track.Artists);
+                    ViewData["Artists"] = track.Artists.Items.ToList();
+                }
 
 
-            ViewData["ArtistsJson"] = JsonConvert.SerializeObject(track.Artists);
-            ViewData["Artists"] = track.Artists.Items.ToList();
-
+            }
 
             return View();
         }
