@@ -8,10 +8,9 @@
 <h2>Album List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { artistId = ViewBag.ArtistId })
-</p>
-<p>
-    @Html.ActionLink("Back to Artist list", "Index", "Artists")
+    <button type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create", new { artistId = ViewBag.ArtistId })
+    </button>
 </p>
 
 <table class="table">
@@ -52,13 +51,30 @@
             @Html.DisplayFor(modelItem => item.Genre)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }) |
-            @Html.ActionLink("Add Song", "AddSong", new { id = item.Id })
+            <button type="button" class="btn btn-default btn-font-black">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </button>
+
+            <button type="button" class="btn btn-info">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
+            </button>
+
+            <button type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Song", "AddSong", new { id = item.Id })
+            </button>
+
+            <button type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </button>
 
 
-        </td>
+</td>
     </tr>
 }
 </table>
+
+<p>
+    <button type="button" class="btn btn-info btn-sm">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to Artist list", "Index", "Artists")
+    </button>
+</p>

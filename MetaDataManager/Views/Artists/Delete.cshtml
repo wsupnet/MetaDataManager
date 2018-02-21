@@ -7,6 +7,7 @@
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</h3>
+<h4>You will not be able to undo changes</h4>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -48,8 +49,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <button type="button" class="btn btn-default btn-font-black">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to List", "Index")
+            </button> |
+            <input type="submit" value="Delete" class="btn btn-danger" />
         </div>
     }
 </div>

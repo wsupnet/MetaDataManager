@@ -6,7 +6,7 @@
 
 <h2>Artists list</h2>
 
-<br/>
+@*<br/>*@
 
 <p>
     <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create")</button>
@@ -36,10 +36,10 @@
             @Html.DisplayFor(modelItem => item.Website)
         </td>
         <td>
-            <button type="button" class="btn btn-default btn-font-black"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
-            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })</button>
-            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Album", "AddDiscography", new { id = item.Id })</button>
-            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>
+            <button type="button" class="btn btn-default btn-font-black btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
+            <button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })</button>
+            <button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Album", "AddDiscography", new { id = item.Id })</button>
+            <button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>
         </td>
     </tr>
 }
