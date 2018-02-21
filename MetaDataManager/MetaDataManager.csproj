@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201802210210007_RemoveTable.Designer.cs">
       <DependentUpon>201802210210007_RemoveTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802211510300_AddedValidationToAllModels.cs" />
+    <Compile Include="Migrations\201802211510300_AddedValidationToAllModels.Designer.cs">
+      <DependentUpon>201802211510300_AddedValidationToAllModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -383,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802210210007_RemoveTable.resx">
       <DependentUpon>201802210210007_RemoveTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802211510300_AddedValidationToAllModels.resx">
+      <DependentUpon>201802211510300_AddedValidationToAllModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
