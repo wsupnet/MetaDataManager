@@ -7,13 +7,13 @@ namespace MetaDataManager.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdatedArtistModel1 : IMigrationMetadata
+    public sealed partial class RemoveTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatedArtistModel1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802070134556_UpdatedArtistModel1"; }
+            get { return "201802210210007_RemoveTable"; }
         }
         
         string IMigrationMetadata.Source

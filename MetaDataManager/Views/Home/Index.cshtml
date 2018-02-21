@@ -3,61 +3,136 @@
 }
 
 <div>
+    <br />
     <form method="POST">
 
         <!--Artist Name Form Box-->
-        <label for="ArtistName">Artist Name</label>
-        <input type="text" id="ArtistName" name="ArtistName" placeholder=" Type an Artist's Name. " />
-        
-        <!--Song Name Form Box-->
-        <label for="SongName">Song Name</label>
-        <input type="text" id="SongName" name="SongName" placeholder=" Type a Song Name. " />
-        <input type="submit" />
+        <div class="form-group">
+            <label for="ArtistName">Search for an Artist</label>
+            <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist">
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
     </form>
-
-    @if (ViewData["Songs"] != null)
-    {
-        <div class="row">
-            Content:
-            <ul>
-                @foreach (var artist in (dynamic)ViewData["Songs"])
-                {
-                    <ul>
-                        @foreach (var image in (dynamic)artist.Album.Images)
-                        {
-                            if (@image.Width == 64)
-                            {
-                                <li><img src="@image.Url"></li>
-                            }
-                        }
-                    </ul>
-                    <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></li>
-                }
-            </ul>
+    <form method="POST">
+        <!--Song Name Form Box-->
+        <div class="form-group">
+            <label for="SongName">Search by Album</label>
+            <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album" />
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
         </div>
-    }
-
-    @if (ViewData["Artists"] != null)
-    {
-        <div class="row">
-            Content:
-            <ul>
-                @foreach (var artist in (dynamic)ViewData["Artists"])
-                {
-                    <ul>
-                        @foreach (var image in (dynamic)artist.Images)
-                        {
-                            if (@image.Width == 160)
-                            {
-                                <li><img src="@image.Url"></li>
-                            }
-                        }
-                    </ul>
-                    <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></li>
-                }
-            </ul>
-        </div>
-    }
-
-
+    </form>
 </div>
+
+        @*@if (ViewData["Songs"] != null)
+        {
+            <div class="row">
+                Content:
+                
+                    @foreach (var artist in (dynamic)ViewData["Songs"])
+                    {
+                        <ul>
+                            @foreach (var image in (dynamic)artist.Album.Images)
+                            {
+                                if (@image.Width == 64)
+                                {
+                                    <li><img src="@image.Url"></li>
+                                }
+                            }
+
+                        </ul>
+                            <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></li>
+                    }
+                
+                </div>
+        }
+
+        @if (ViewData["Artists"] != null)
+        {
+            <div class="row">
+                Content:
+                <ul>
+                    @foreach (var artist in (dynamic)ViewData["Artists"])
+                    {
+                        <ul>
+                            @foreach (var image in (dynamic)artist.Images)
+                            {
+                                if (@image.Width == 160)
+                                {
+                                    <li><img src="@image.Url"></li>
+                                }
+                            }
+                        </ul>
+                        <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+
+    *@
+
+@if (ViewData["Artists"] != null)
+{
+
+    <div class="table-responsive-md">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var artist in (dynamic)ViewData["Artists"])
+            {
+                <tr>
+                    @foreach (var image in (dynamic)artist.Images)
+                    {
+                        if (@image.Width < 301 && @image.Width > 64)
+                        {
+                            <td><img height="150" width="150" src="@image.Url"></td>
+                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
+                        }
+                    }
+
+                </tr>
+            }
+
+
+        </table>
+     </div>
+}
+
+@if (ViewData["Songs"] != null)
+{
+
+    <div class="table-responsive-md">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var artist in (dynamic)ViewData["Songs"])
+            {
+                <tr>
+                    @foreach (var image in (dynamic)artist.Album.Images)
+                    {
+                        if (@image.Width == 64)
+                        {
+                            <td><img height="100" width="100" src="@image.Url"></td>
+                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
+                        }
+                    }
+
+                </tr>
+            }
+
+
+        </table>
+    </div>
+}

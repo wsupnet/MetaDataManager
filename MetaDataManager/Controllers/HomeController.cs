@@ -41,9 +41,9 @@ namespace MetaDataManager.Controllers
                 auth = new ClientCredentialsAuth()
                 {
                     //Your client Id
-                    ClientId = "CLIENT_ID_HERE",
+                    ClientId = "d465cd5175d04b038cca6f1679643396",
                     //Your client secret UNSECURE!!
-                    ClientSecret = "CLIENT_SECRET_HERE",
+                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
                     //How many permissions we need?
                     Scope = Scope.UserReadPrivate,
                 };
@@ -59,7 +59,7 @@ namespace MetaDataManager.Controllers
 
                 //SearchItem track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
                 //var track = spotify.SearchItems("roadhouse+blues", SearchType.Album | SearchType.Playlist);
-                var track = spotify.SearchItems(artistNameModel.ArtistName, SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
+                var searchArtist = spotify.SearchItems(artistNameModel.ArtistName, SpotifyAPI.Web.Enums.SearchType.Artist | SpotifyAPI.Web.Enums.SearchType.Playlist);
                 var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track | SpotifyAPI.Web.Enums.SearchType.Playlist);
 
                 if (!string.IsNullOrEmpty(artistNameModel.SongName))
@@ -69,8 +69,8 @@ namespace MetaDataManager.Controllers
                 }
                 else if (!string.IsNullOrEmpty(artistNameModel.ArtistName))
                 {
-                    ViewData["ArtistsJson"] = JsonConvert.SerializeObject(track.Artists);
-                    ViewData["Artists"] = track.Artists.Items.ToList();
+                    ViewData["ArtistsJson"] = JsonConvert.SerializeObject(searchArtist.Artists);
+                    ViewData["Artists"] = searchArtist.Artists.Items.ToList();
                 }
 
 
