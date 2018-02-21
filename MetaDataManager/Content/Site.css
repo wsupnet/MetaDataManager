@@ -31,3 +31,7 @@ textarea {
 .btn-font-black a {
     color: black;
 }
+
+.glyphicon {
+    padding-right: 0.5em;
+}
