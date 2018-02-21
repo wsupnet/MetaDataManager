@@ -16,9 +16,16 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Songs
-        public ActionResult Index()
+        public ActionResult Index(int? albumId)
         {
-            return View(db.Songs.ToList());
+            if (albumId == null)
+            {
+                return View(db.Songs.ToList());
+            }
+
+            ViewBag.AlbumId = albumId;
+
+            return View(db.Songs.Where(x => x.AlbumId == albumId).ToList());
         }
 
         // GET: Songs/Details/5
@@ -37,8 +44,12 @@ namespace MetaDataManager.Controllers
         }
 
         // GET: Songs/Create
-        public ActionResult Create()
+        public ActionResult Create(int albumId)
         {
+            Song song = new Song();
+
+            ViewBag.AlbumId = albumId;
+
             return View();
         }
 
@@ -47,13 +58,13 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Album,Artist,Year")] Song song)
+        public ActionResult Create([Bind(Include = "Id,Title,AlbumId,Artist,Year")] Song song)
         {
             if (ModelState.IsValid)
             {
                 db.Songs.Add(song);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { songId = song.AlbumId });
             }
 
             return View(song);

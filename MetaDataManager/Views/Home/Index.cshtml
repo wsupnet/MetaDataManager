@@ -1,31 +1,138 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div>
+    <br />
+    <form method="POST">
+
+        <!--Artist Name Form Box-->
+        <div class="form-group">
+            <label for="ArtistName">Search for an Artist</label>
+            <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist">
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <form method="POST">
+        <!--Song Name Form Box-->
+        <div class="form-group">
+            <label for="SongName">Search by Album</label>
+            <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album" />
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        @*@if (ViewData["Songs"] != null)
+        {
+            <div class="row">
+                Content:
+                
+                    @foreach (var artist in (dynamic)ViewData["Songs"])
+                    {
+                        <ul>
+                            @foreach (var image in (dynamic)artist.Album.Images)
+                            {
+                                if (@image.Width == 64)
+                                {
+                                    <li><img src="@image.Url"></li>
+                                }
+                            }
+
+                        </ul>
+                            <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></li>
+                    }
+                
+                </div>
+        }
+
+        @if (ViewData["Artists"] != null)
+        {
+            <div class="row">
+                Content:
+                <ul>
+                    @foreach (var artist in (dynamic)ViewData["Artists"])
+                    {
+                        <ul>
+                            @foreach (var image in (dynamic)artist.Images)
+                            {
+                                if (@image.Width == 160)
+                                {
+                                    <li><img src="@image.Url"></li>
+                                }
+                            }
+                        </ul>
+                        <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+
+    *@
+
+@if (ViewData["Artists"] != null)
+{
+
+    <div class="table-responsive-md">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var artist in (dynamic)ViewData["Artists"])
+            {
+                <tr>
+                    @foreach (var image in (dynamic)artist.Images)
+                    {
+                        if (@image.Width < 301 && @image.Width > 64)
+                        {
+                            <td><img height="150" width="150" src="@image.Url"></td>
+                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
+                        }
+                    }
+
+                </tr>
+            }
+
+
+        </table>
+     </div>
+}
+
+@if (ViewData["Songs"] != null)
+{
+
+    <div class="table-responsive-md">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var artist in (dynamic)ViewData["Songs"])
+            {
+                <tr>
+                    @foreach (var image in (dynamic)artist.Album.Images)
+                    {
+                        if (@image.Width == 64)
+                        {
+                            <td><img height="100" width="100" src="@image.Url"></td>
+                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
+                        }
+                    }
+
+                </tr>
+            }
+
+
+        </table>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+}
