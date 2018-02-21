@@ -28,11 +28,6 @@ namespace MetaDataManager.Controllers
         // GET: Artists/Details/5
         public ActionResult Details(int? id)
         {
-            Artist model = new Artist();
-            if (model.Description == null)
-            {
-                ViewBag.HtmlStr = "The artist does not have a bio yet.";
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

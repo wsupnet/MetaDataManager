@@ -17,11 +17,11 @@ namespace MetaDataManager.Controllers
             var Results =
                 (from Artist in db.Artists
                  join Album in db.Albums
-                 on Artist.Id equals Album.Id
+                 on Artist.Id equals Album.ArtistId
                  select new AlbumViewModel
                  {
-                     Name = Artist.Name,
-                     Year = Artist.YearFormed,
+                     Name = Album.Name,
+                     Year = Album.Year,
                      Artist = Artist.Name,
                  }).ToList();
 
