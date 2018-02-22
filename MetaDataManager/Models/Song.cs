@@ -14,9 +14,7 @@ namespace MetaDataManager.Models
         [Required]
         public string Title { get; set; }
 
-        public string AlbumName { get; set; }
-
-        public int Year { get; set; }
+        //public int Year { get; set; }
 
         public int AlbumId { get; set; }
 
