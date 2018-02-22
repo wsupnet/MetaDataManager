@@ -17,9 +17,9 @@
         @*<th>
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.AlbumName)</span></h4>
         </th>*@
-        <th>
+        @*<th>
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Year)</span></h4>
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -31,9 +31,9 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.AlbumName)
         </td>*@
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Year)
-        </td>
+        </td>*@
         <td>
             <button type="button" class="btn btn-default btn-font-black btn-sm">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
