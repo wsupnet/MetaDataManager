@@ -4,21 +4,21 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Song index</h2>
+<h2>Song list</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create", new { albumId = ViewBag.AlbumId })
-</p>
-<table class="table">
+</p>*@
+<table class="table table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Title)</span></h4>
         </th>
+        @*<th>
+            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.AlbumName)</span></h4>
+        </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.AlbumName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Year)
+            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Year)</span></h4>
         </th>
         <th></th>
     </tr>
@@ -28,16 +28,24 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.AlbumName)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Year)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <button type="button" class="btn btn-default btn-font-black btn-sm">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </button>
+
+            <button type="button" class="btn btn-info btn-sm">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
+            </button>
+
+            <button type="button" class="btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </button>
         </td>
     </tr>
 }
