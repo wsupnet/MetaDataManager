@@ -55,6 +55,10 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index", new { id = Model.Id })
+    <button type="button" class="btn btn-default btn-font-black">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to List", "Index")
+    </button> |
+    <button type="button" class="btn btn-default btn-font-black">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    </button>
 </p>

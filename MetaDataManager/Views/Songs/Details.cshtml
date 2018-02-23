@@ -18,25 +18,29 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.AlbumName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.AlbumName)
-        </dd>
+        </dd>*@
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Year)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Year)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <button type="button" class="btn btn-default btn-font-black">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to List", "Index")
+    </button> |
+    <button type="button" class="btn btn-default btn-font-black">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    </button>
 </p>
