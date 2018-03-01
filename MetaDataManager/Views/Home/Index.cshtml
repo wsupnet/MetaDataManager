@@ -17,61 +17,13 @@
     <form method="POST">
         <!--Song Name Form Box-->
         <div class="form-group">
-            <label for="SongName">Search by Album</label>
+            <label for="SongName">Search for Album</label>
             <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album" />
             <br />
             <button class="btn btn-primary" type="submit">Search</button>
         </div>
     </form>
 </div>
-
-        @*@if (ViewData["Songs"] != null)
-        {
-            <div class="row">
-                Content:
-                
-                    @foreach (var artist in (dynamic)ViewData["Songs"])
-                    {
-                        <ul>
-                            @foreach (var image in (dynamic)artist.Album.Images)
-                            {
-                                if (@image.Width == 64)
-                                {
-                                    <li><img src="@image.Url"></li>
-                                }
-                            }
-
-                        </ul>
-                            <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></li>
-                    }
-                
-                </div>
-        }
-
-        @if (ViewData["Artists"] != null)
-        {
-            <div class="row">
-                Content:
-                <ul>
-                    @foreach (var artist in (dynamic)ViewData["Artists"])
-                    {
-                        <ul>
-                            @foreach (var image in (dynamic)artist.Images)
-                            {
-                                if (@image.Width == 160)
-                                {
-                                    <li><img src="@image.Url"></li>
-                                }
-                            }
-                        </ul>
-                        <li><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></li>
-                    }
-                </ul>
-            </div>
-        }
-
-
-    *@
 
 @if (ViewData["Artists"] != null)
 {
@@ -126,6 +78,9 @@
                         {
                             <td><img height="100" width="100" src="@image.Url"></td>
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
+                            <td><button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumId = artist.Album.Id, songId = artist.Id })
+                                </button></td>
                         }
                     }
 

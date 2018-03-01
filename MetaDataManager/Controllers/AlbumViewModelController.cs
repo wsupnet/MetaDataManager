@@ -21,7 +21,6 @@ namespace MetaDataManager.Controllers
                  select new AlbumViewModel
                  {
                      Name = Album.Name,
-                     Year = Album.Year,
                      Artist = Artist.Name,
                  }).ToList();
 

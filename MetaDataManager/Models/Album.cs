@@ -11,22 +11,17 @@ namespace MetaDataManager.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
-
-        //public string Artist { get; set; }
-
-        public int Year { get; set; }
 
         public int Tracks { get; set; }
 
-        //public string Genre { get; set; }
-
         public int ArtistId { get; set; }
 
-        [ForeignKey("ArtistId")]
-        public virtual Artist Artists { get; set; }
+        //[ForeignKey("ArtistId")]
+        //public virtual Artist Artists { get; set; }
 
+        public string Spotify_Id { get; set; }
 
+        public string Playlist_Id { get; set; }
     }
 }

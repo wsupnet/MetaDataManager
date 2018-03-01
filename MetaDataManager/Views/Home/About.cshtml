@@ -1,7 +1,24 @@
-﻿@{
+﻿@model MetaDataManager.Models.Playlist
+
+@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div>
+    <br />
+    <form method="POST">
+
+        <div class="form-group">
+            <label for="ArtistName">Create a Playlist</label>
+            <input type="text" name="PlaylistName" id="PlaylistName" class="form-control" placeholder="Enter Name for new playlist"/>
+            <input type="text" name="Description" id="Description" class="form-control" placeholder="Enter a description for new playlist"/>
+            <input name="Collaboration" id="Collaboration" type="checkbox"/>
+            <label for="Collaboration">Do you want to collaborate with users?</label>
+            <br/>
+            <input name="Public" id="Public" type="checkbox" />
+            <label for="Public">Public</label>
+
+            <button class="btn btn-primary" type="submit">Create Playlist</button>
+        </div>
+    </form>
+</div>
