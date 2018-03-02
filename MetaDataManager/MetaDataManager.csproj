@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201802281812043_RemovedYearColumnFromAlbumModel.Designer.cs">
       <DependentUpon>201802281812043_RemovedYearColumnFromAlbumModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803020032156_UpdateOnMarchFirst.cs" />
+    <Compile Include="Migrations\201803020032156_UpdateOnMarchFirst.Designer.cs">
+      <DependentUpon>201803020032156_UpdateOnMarchFirst.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -442,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802281812043_RemovedYearColumnFromAlbumModel.resx">
       <DependentUpon>201802281812043_RemovedYearColumnFromAlbumModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803020032156_UpdateOnMarchFirst.resx">
+      <DependentUpon>201803020032156_UpdateOnMarchFirst.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
