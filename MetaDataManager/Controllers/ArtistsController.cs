@@ -12,6 +12,7 @@ using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
 using SpotifyAPI.Web.Enums;
+using Newtonsoft.Json;
 
 namespace MetaDataManager.Controllers
 {
@@ -20,7 +21,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Artists
-        public ActionResult Index(string Spot_Id)
+        public ActionResult Index(string Spot_Id, ArtistNameModel artistNameModel)
         {
             if (ModelState.IsValid)
             {
@@ -42,6 +43,17 @@ namespace MetaDataManager.Controllers
                     AccessToken = token.AccessToken,
                     UseAuth = true
                 };
+
+                //Searches for artist
+                var searchArtist = spotify.SearchItems(artistNameModel.ArtistName, SpotifyAPI.Web.Enums.SearchType.Artist);
+
+                if (!string.IsNullOrEmpty(artistNameModel.ArtistName))
+                {
+                    ViewData["ArtistsJson"] = JsonConvert.SerializeObject(searchArtist.Artists);
+                    ViewData["Artists"] = searchArtist.Artists.Items.ToList();
+                }
+
+
 
                 List<Artist> model = new List<Artist>(); //Create a list so we can add items 
                 foreach (var artist in db.Artists) // For each album you find in database of albums...
@@ -66,9 +78,6 @@ namespace MetaDataManager.Controllers
 
                 return View(model);
             }
-
-            //MetaDataManagerContext metaDataManagerContext = new MetaDataManagerContext();
-            //List<Artist> artists = metaDataManagerContext.Artists.ToList();
 
             return View(db.Artists.ToList());
         }
@@ -192,33 +201,24 @@ namespace MetaDataManager.Controllers
 
         }
 
-        //public static string AbsoluteAction(this UrlHelper url, string actionName, string controllerName, object routeValues = null)
-        //{
-        //    string scheme = url.RequestContext.HttpContext.Request.Url.Scheme;
+        [HttpGet]
+        public ActionResult Add(string Spot_Id)
+        {
+            if (ModelState.IsValid)
+            {
+                //Creating a new instance of the artist class.
+                //Basically populating the properties/fields
+                Artist artist = new Artist
+                {
+                    Spotify_Id = Spot_Id
+                };
 
-        //    return url.Action(actionName, controllerName, routeValues, scheme);
-        //}
+                db.Artists.Add(artist);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-        //[HttpGet]
-        //public ActionResult Add(string Spot_Id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        //Creating a new instance of the Artist class.
-        //        //Basically populating the properties/fields
-
-        //        Artist artist = new Artist
-        //        {
-        //            Spotify_Id = Spot_Id,
-        //        };
-
-        //        db.Albums.Add(artist);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View("Index");
-        //}
+            return View("Index");
+        }
     }
 }

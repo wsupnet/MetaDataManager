@@ -4,6 +4,56 @@
     ViewBag.Title = "Index";
 }
 
+<br/>
+<form method="POST">
+
+    <!--Artist Name Form Box-->
+    <div class="form-group">
+        <label for="ArtistName">Search for an Artist</label>
+        <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist">
+        <br />
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+
+@if (ViewData["Artists"] != null)
+{
+
+    <div class="table-responsive-md table-condensed">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var artist in (dynamic)ViewData["Artists"])
+            {
+                <tr>
+                    @foreach (var image in (dynamic)artist.Images)
+                    {
+                        if (@image.Width < 301 && @image.Width > 64)
+                        {
+                            <td><img height="100" width="100" src="@image.Url"></td>
+                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
+                            <td>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id })
+                                </button>
+                            </td>
+                        }
+                    }
+
+                </tr>
+            }
+
+
+        </table>
+    </div>
+}
+
 <h2>Artists list</h2>
 
 @*<br/>*@

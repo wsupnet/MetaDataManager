@@ -28,72 +28,8 @@ namespace MetaDataManager.Controllers
         //private static SpotifyWebAPI _spotify;
         static ClientCredentialsAuth auth;
 
-        [HttpGet]
         public ActionResult Index()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Index(ArtistNameModel artistNameModel)
-        {
-            if (ModelState.IsValid)
-            {
-
-                //Create the auth object
-                auth = new ClientCredentialsAuth()
-                {
-                    //Your client Id
-                    ClientId = "d465cd5175d04b038cca6f1679643396",
-                    //Your client secret UNSECURE!!
-                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
-                    //How many permissions we need?
-                    Scope = Scope.UserReadPrivate,
-                };
-
-                //With this token object, we now can make calls
-                Token token = auth.DoAuth();
-                var spotify = new SpotifyWebAPI()
-                {
-                    TokenType = token.TokenType,
-                    AccessToken = token.AccessToken,
-                    UseAuth = true
-                };
-
-                var searchArtist = spotify.SearchItems(artistNameModel.ArtistName, SpotifyAPI.Web.Enums.SearchType.Artist);
-
-                //var albumInfo = spotify.GetAlbum("2szeSQtOcJgRhDXmTS3SIf");
-                //var trackInfo = spotify.GetTrack("2szeSQtOcJgRhDXmTS3SIf");
-                //var artistInfo = spotify.GetArtist("2szeSQtOcJgRhDXmTS3SIf");
-
-                //Searches for songName
-                var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track);
-
-                
-
-
-                if (!string.IsNullOrEmpty(artistNameModel.SongName))
-                {
-                    var result = songName.Tracks;
-                    ViewData["SongJson"] = JsonConvert.SerializeObject(result);
-                    ViewData["Songs"] = songName.Tracks.Items.ToList();
-
-                    //Save to database table
-                    //foreach (var song in result.Items)
-                    //{
-                    //    var name = song.Name;
-                    //    var spot_Id = song.Id;
-                    //}
-                }
-                else if (!string.IsNullOrEmpty(artistNameModel.ArtistName))
-                {
-                    ViewData["ArtistsJson"] = JsonConvert.SerializeObject(searchArtist.Artists);
-                    ViewData["Artists"] = searchArtist.Artists.Items.ToList();
-                }
-
-
-            }
-
             return View();
         }
 
@@ -147,35 +83,6 @@ namespace MetaDataManager.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult Add(string songId, string albumId, string Spot_Id)
-        {
-            if (ModelState.IsValid)
-            {
-
-                //Creating a new instance of the Album class.
-                //Basically populating the properties/fields
-                Artist artist = new Artist
-                {
-                    Spotify_Id = Spot_Id
-                };
-
-
-                Album album = new Album
-                {
-                    Spotify_Id = songId,
-                    Playlist_Id = albumId
-                };
-
-                db.Artists.Add(artist);
-                db.Albums.Add(album);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View("Index");
         }
     }
 }

@@ -12,6 +12,7 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
+using Newtonsoft.Json;
 
 namespace MetaDataManager.Controllers
 {
@@ -20,7 +21,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Albums
-        public ActionResult Index(int? artistId)
+        public ActionResult Index(int? artistId, string songId, string albumId, ArtistNameModel artistNameModel)
         {
 
             if (artistId == null)
@@ -43,6 +44,18 @@ namespace MetaDataManager.Controllers
                     AccessToken = token.AccessToken,
                     UseAuth = true
                 };
+
+                //Searches for songName
+                var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track);
+
+
+                if (!string.IsNullOrEmpty(artistNameModel.SongName))
+                {
+                    var result = songName.Tracks;
+                    ViewData["SongJson"] = JsonConvert.SerializeObject(result);
+                    ViewData["Songs"] = songName.Tracks.Items.ToList();
+
+                }
 
                 List<Album> model = new  List<Album>(); //Create a list so we can add items 
                 foreach (var album in db.Albums) // For each album you find in database of albums...
@@ -186,6 +199,28 @@ namespace MetaDataManager.Controllers
         public ActionResult AddSong(int Id)
         {
             return RedirectToAction("Index", "Songs", new { albumId = Id });
+        }
+
+        [HttpGet]
+        public ActionResult Add(string songId, string albumId)
+        {
+            if (ModelState.IsValid)
+            {
+
+                //Creating a new instance of the Album class.
+                //Basically populating the properties/fields
+                Album album = new Album
+                {
+                    Spotify_Id = songId,
+                    Playlist_Id = albumId
+                };
+
+                db.Albums.Add(album);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View("Index");
         }
     }
 }
