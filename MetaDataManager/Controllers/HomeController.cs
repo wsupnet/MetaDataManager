@@ -150,13 +150,18 @@ namespace MetaDataManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Add(string songId, string albumId)
+        public ActionResult Add(string songId, string albumId, string Spot_Id)
         {
             if (ModelState.IsValid)
             {
 
                 //Creating a new instance of the Album class.
                 //Basically populating the properties/fields
+                Artist artist = new Artist
+                {
+                    Spotify_Id = Spot_Id
+                };
+
 
                 Album album = new Album
                 {
@@ -164,6 +169,7 @@ namespace MetaDataManager.Controllers
                     Playlist_Id = albumId
                 };
 
+                db.Artists.Add(artist);
                 db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");

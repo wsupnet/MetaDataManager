@@ -46,6 +46,11 @@
                         {
                             <td><img height="150" width="150" src="@image.Url"></td>
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
+                            <td>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id })
+                                </button>
+                            </td>
                         }
                     }
 
