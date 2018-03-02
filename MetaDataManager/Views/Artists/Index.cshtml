@@ -29,7 +29,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a href="/Artists/Details/@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            <a target="_blank" href="https://open.spotify.com/artist/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.YearFormed)
