@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using MetaDataManager.Data;
 using MetaDataManager.Models;
+using SpotifyAPI.Web.Auth;
+using SpotifyAPI.Web;
+using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Enums;
 
 namespace MetaDataManager.Controllers
 {
@@ -16,8 +20,52 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Artists
-        public ActionResult Index()
+        public ActionResult Index(string Spot_Id)
         {
+            if (ModelState.IsValid)
+            {
+                //Create the auth object
+                var auth = new ClientCredentialsAuth()
+                {
+                    //Your client Id
+                    ClientId = "d465cd5175d04b038cca6f1679643396",
+                    //Your client secret UNSECURE!!
+                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
+                    //How many permissions we need?
+                    Scope = Scope.UserReadPrivate,
+                };
+
+                Token token = auth.DoAuth();
+                var spotify = new SpotifyWebAPI()
+                {
+                    TokenType = token.TokenType,
+                    AccessToken = token.AccessToken,
+                    UseAuth = true
+                };
+
+                List<Artist> model = new List<Artist>(); //Create a list so we can add items 
+                foreach (var artist in db.Artists) // For each album you find in database of albums...
+                {
+                    if (artist.Spotify_Id != null) // If the Spotify_Id is not null
+                    {
+                        // It uses the spotify api and searches using the GetTrack method against the database 
+                        var searchTrack = spotify.GetArtist(artist.Spotify_Id);
+
+                        //Create a temporary model so we can add it to the model list above
+                        var tempModel = new Artist
+                        {
+                            Name = searchTrack.Name,
+                            Spotify_Id = artist.Spotify_Id,
+                        };
+                        model.Add(tempModel); //Adding our results to the model we created earlier
+                    }
+
+                    //returns the List we made referencing the Spotify_Id of the album
+                    
+                }
+
+                return View(model);
+            }
 
             //MetaDataManagerContext metaDataManagerContext = new MetaDataManagerContext();
             //List<Artist> artists = metaDataManagerContext.Artists.ToList();
@@ -149,6 +197,28 @@ namespace MetaDataManager.Controllers
         //    string scheme = url.RequestContext.HttpContext.Request.Url.Scheme;
 
         //    return url.Action(actionName, controllerName, routeValues, scheme);
+        //}
+
+        //[HttpGet]
+        //public ActionResult Add(string Spot_Id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        //Creating a new instance of the Artist class.
+        //        //Basically populating the properties/fields
+
+        //        Artist artist = new Artist
+        //        {
+        //            Spotify_Id = Spot_Id,
+        //        };
+
+        //        db.Albums.Add(artist);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View("Index");
         //}
     }
 }
