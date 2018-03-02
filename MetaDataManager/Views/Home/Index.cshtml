@@ -1,5 +1,5 @@
-﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<searchArtist.Artists>
+﻿@*@using PagedList.Mvc;
+@model PagedList.IPagedList<searchArtist.Artists>*@
 
 @{
     ViewData["Title"] = "Home Page";
@@ -92,9 +92,9 @@
 
 
         </table>
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
-        @Html.PagedListPager(PagedList.IPagedList<ViewData["Artists"]>, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        @*Html.PagedListPager(PagedList.IPagedList<ViewData["Artists"]>, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
     </div>
 }
