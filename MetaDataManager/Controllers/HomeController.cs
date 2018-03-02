@@ -37,7 +37,7 @@ namespace MetaDataManager.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(ArtistNameModel artistNameModel, int? page)
+        public async Task<ActionResult> Index(ArtistNameModel artistNameModel)
         {
             if (ModelState.IsValid)
             {
@@ -104,6 +104,8 @@ namespace MetaDataManager.Controllers
 
                 return View();
             }
+
+            return View();
         }
 
         [HttpGet]
