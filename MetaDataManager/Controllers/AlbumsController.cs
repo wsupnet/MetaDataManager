@@ -45,12 +45,11 @@ namespace MetaDataManager.Controllers
                 };
 
                 List<Album> model = new  List<Album>(); //Create a list so we can add items 
-                foreach (var album in db.Albums) // For each album you find in database of albums...
+                foreach (var album in db.Albums)
                 {
-                    if (album.Spotify_Id != null) // If the Spotify_Id is not null
+                    if (album.Spotify_Id != null)
                     {
-                        // It uses the spotify api and searches using the GetTrack method against the database 
-                        var searchTrack = spotify.GetTrack(album.Spotify_Id, ""); 
+                        var searchTrack = spotify.GetTrack(album.Spotify_Id, "");
 
                         //Create a temporary model so we can add it to the model list above
                         var tempModel = new Album
@@ -63,10 +62,15 @@ namespace MetaDataManager.Controllers
                         };
                         model.Add(tempModel); //Adding our results to the model we created earlier
                     }
+
+
+                    //Search spotify for the artist
+                   
+                    //var searchArtist = spotify.SearchItems(artistNameModel.ArtistName, SearchType.Artist);
                     
                 }
-                //returns the List we made referencing the Spotify_Id of the album
                 return View(model);
+                //return View(db.Albums.ToList());
             }
 
             ViewBag.ArtistId = artistId;

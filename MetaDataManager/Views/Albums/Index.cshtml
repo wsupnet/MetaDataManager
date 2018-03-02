@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a target="_blank" href="https://open.spotify.com/track/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Artist)
@@ -57,7 +57,7 @@
             </button>
 
             <button type="button" class="btn btn-danger btn-sm">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Spotify_Id })
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </button>
 
 

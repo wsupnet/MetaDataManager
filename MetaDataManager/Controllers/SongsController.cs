@@ -8,10 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using MetaDataManager.Data;
 using MetaDataManager.Models;
-using SpotifyAPI.Web;
-using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 
 namespace MetaDataManager.Controllers
 {
@@ -24,55 +20,8 @@ namespace MetaDataManager.Controllers
         {
             if (albumId == null)
             {
-                //Create the auth object
-                var auth = new ClientCredentialsAuth()
-                {
-                    //Your client Id
-                    ClientId = "d465cd5175d04b038cca6f1679643396",
-                    //Your client secret UNSECURE!!
-                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
-                    //How many permissions we need?
-                    Scope = Scope.UserReadPrivate,
-                };
-
-                Token token = auth.DoAuth();
-                var spotify = new SpotifyWebAPI()
-                {
-                    TokenType = token.TokenType,
-                    AccessToken = token.AccessToken,
-                    UseAuth = true
-                };
-
-                List<Song> model = new List<Song>(); //Create a list so we can add items 
-                foreach (var song in db.Songs) // For each album you find in database of albums...
-                {
-                    if (song.Spotify_Id != null) // If the Spotify_Id is not null
-                    {
-                        // It uses the spotify api and searches using the GetTrack method against the database 
-                        var searchTrack = spotify.GetTrack(song.Spotify_Id, "");
-
-                        //Create a temporary model so we can add it to the model list above
-                        var tempModel = new Song
-                        {
-                            Title = searchTrack.Name,
-                            AlbumId = song.AlbumId,
-                            Spotify_Id = song.Spotify_Id,
-                            Playlist_Id = song.Playlist_Id
-                        };
-                        model.Add(tempModel); //Adding our results to the model we created earlier
-                    }
-
-                }
-                //returns the List we made referencing the Spotify_Id of the album
-                return View(model);
+                return View(db.Songs.ToList());
             }
-
-
-
-            //if (albumId == null)
-            //{
-            //    return View(db.Songs.ToList());
-            //}
 
             ViewBag.AlbumId = albumId;
 

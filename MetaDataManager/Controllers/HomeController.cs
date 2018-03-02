@@ -18,6 +18,8 @@ using SpotifyAPI.Web.Enums; //Enums
 using SpotifyAPI.Web.Models; //Models for the JSON-responses
 using Newtonsoft.Json;
 using MetaDataManager.Data;
+using PagedList;
+using System.Web.UI;
 
 namespace MetaDataManager.Controllers
 {
@@ -69,11 +71,13 @@ namespace MetaDataManager.Controllers
                 //Searches for songName
                 var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track);
 
-                
+
 
 
                 if (!string.IsNullOrEmpty(artistNameModel.SongName))
                 {
+                    //int pageSize = 5;
+                    //int pageNumber = (page ?? 1);
                     var result = songName.Tracks;
                     ViewData["SongJson"] = JsonConvert.SerializeObject(result);
                     ViewData["Songs"] = songName.Tracks.Items.ToList();
@@ -87,11 +91,18 @@ namespace MetaDataManager.Controllers
                 }
                 else if (!string.IsNullOrEmpty(artistNameModel.ArtistName))
                 {
+                    //int pageSize = 5;
+                    //int pageNumber = (page ?? 1);
+                    var result = songName.Tracks;
                     ViewData["ArtistsJson"] = JsonConvert.SerializeObject(searchArtist.Artists);
                     ViewData["Artists"] = searchArtist.Artists.Items.ToList();
+
+                    //var model = searchArtist.Artists.Items.ToPagedList(pageNumber, pageSize);
+                    //return View(model);
+
                 }
 
-
+                return View();
             }
 
             return View();
@@ -150,18 +161,13 @@ namespace MetaDataManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Add(string songId, string albumId, string Spot_Id)
+        public ActionResult Add(string songId, string albumId)
         {
             if (ModelState.IsValid)
             {
 
                 //Creating a new instance of the Album class.
                 //Basically populating the properties/fields
-                Artist artist = new Artist
-                {
-                    Spotify_Id = Spot_Id
-                };
-
 
                 Album album = new Album
                 {
@@ -169,7 +175,6 @@ namespace MetaDataManager.Controllers
                     Playlist_Id = albumId
                 };
 
-                db.Artists.Add(artist);
                 db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -177,5 +182,5 @@ namespace MetaDataManager.Controllers
 
             return View("Index");
         }
-    }
+        }
 }
