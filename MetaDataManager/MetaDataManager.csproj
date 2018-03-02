@@ -179,6 +179,7 @@
     <Compile Include="Controllers\AlbumViewModelController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Controllers\SongViewModelController.cs" />
     <Compile Include="Data\MetaDataManagerContext.cs" />
@@ -245,10 +246,31 @@
     <Compile Include="Migrations\201802221411463_UpdateSongModel.Designer.cs">
       <DependentUpon>201802221411463_UpdateSongModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802230142393_AddedSpotify_IdAndPlaylist_IdToModels.cs" />
+    <Compile Include="Migrations\201802230142393_AddedSpotify_IdAndPlaylist_IdToModels.Designer.cs">
+      <DependentUpon>201802230142393_AddedSpotify_IdAndPlaylist_IdToModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802230228330_CreatePlaylistTable.cs" />
+    <Compile Include="Migrations\201802230228330_CreatePlaylistTable.Designer.cs">
+      <DependentUpon>201802230228330_CreatePlaylistTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802230239584_UpdatedAlbumModel2.cs" />
+    <Compile Include="Migrations\201802230239584_UpdatedAlbumModel2.Designer.cs">
+      <DependentUpon>201802230239584_UpdatedAlbumModel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802280033129_UpdatedAlbumModel3.cs" />
+    <Compile Include="Migrations\201802280033129_UpdatedAlbumModel3.Designer.cs">
+      <DependentUpon>201802280033129_UpdatedAlbumModel3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802281812043_RemovedYearColumnFromAlbumModel.cs" />
+    <Compile Include="Migrations\201802281812043_RemovedYearColumnFromAlbumModel.Designer.cs">
+      <DependentUpon>201802281812043_RemovedYearColumnFromAlbumModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\ArtistNameModel.cs" />
+    <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AlbumViewModel.cs" />
@@ -348,6 +370,11 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\SongViewModel\Index.cshtml" />
+    <Content Include="Views\Playlists\Create.cshtml" />
+    <Content Include="Views\Playlists\Delete.cshtml" />
+    <Content Include="Views\Playlists\Details.cshtml" />
+    <Content Include="Views\Playlists\Edit.cshtml" />
+    <Content Include="Views\Playlists\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -400,6 +427,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802221411463_UpdateSongModel.resx">
       <DependentUpon>201802221411463_UpdateSongModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802230142393_AddedSpotify_IdAndPlaylist_IdToModels.resx">
+      <DependentUpon>201802230142393_AddedSpotify_IdAndPlaylist_IdToModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802230228330_CreatePlaylistTable.resx">
+      <DependentUpon>201802230228330_CreatePlaylistTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802230239584_UpdatedAlbumModel2.resx">
+      <DependentUpon>201802230239584_UpdatedAlbumModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802280033129_UpdatedAlbumModel3.resx">
+      <DependentUpon>201802280033129_UpdatedAlbumModel3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802281812043_RemovedYearColumnFromAlbumModel.resx">
+      <DependentUpon>201802281812043_RemovedYearColumnFromAlbumModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

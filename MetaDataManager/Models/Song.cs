@@ -21,6 +21,9 @@ namespace MetaDataManager.Models
         [ForeignKey("AlbumId")]
         public virtual Album Albums { get; set; }
 
+        public string Spotify_Id { get; set; }
+
+        public string Playlist_Id { get; set; }
 
     }
 }

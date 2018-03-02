@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using MetaDataManager.Data;
 using MetaDataManager.Models;
+using SpotifyAPI.Web;
+using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Auth;
+using SpotifyAPI.Web.Enums;
 
 namespace MetaDataManager.Controllers
 {
@@ -21,7 +25,52 @@ namespace MetaDataManager.Controllers
 
             if (artistId == null)
             {
-                return View(db.Albums.ToList());
+                //Create the auth object
+                 var auth = new ClientCredentialsAuth()
+                {
+                    //Your client Id
+                    ClientId = "d465cd5175d04b038cca6f1679643396",
+                    //Your client secret UNSECURE!!
+                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
+                    //How many permissions we need?
+                    Scope = Scope.UserReadPrivate,
+                };
+
+                Token token = auth.DoAuth();
+                var spotify = new SpotifyWebAPI()
+                {
+                    TokenType = token.TokenType,
+                    AccessToken = token.AccessToken,
+                    UseAuth = true
+                };
+
+                List<Album> model = new  List<Album>(); //Create a list so we can add items 
+                foreach (var album in db.Albums)
+                {
+                    if (album.Spotify_Id != null)
+                    {
+                        var searchTrack = spotify.GetTrack(album.Spotify_Id, "");
+
+                        //Create a temporary model so we can add it to the model list above
+                        var tempModel = new Album
+                        {
+                            Name = searchTrack.Album.Name,
+                            Tracks = album.Tracks,
+                            ArtistId = album.ArtistId,
+                            Spotify_Id = album.Spotify_Id,
+                            Playlist_Id = album.Playlist_Id
+                        };
+                        model.Add(tempModel); //Adding our results to the model we created earlier
+                    }
+
+
+                    //Search spotify for the artist
+                   
+                    //var searchArtist = spotify.SearchItems(artistNameModel.ArtistName, SearchType.Artist);
+                    
+                }
+                return View(model);
+                //return View(db.Albums.ToList());
             }
 
             ViewBag.ArtistId = artistId;

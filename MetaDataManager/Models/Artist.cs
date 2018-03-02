@@ -22,5 +22,7 @@ namespace MetaDataManager.Models
 
         [DisplayName("Artist Bio")]
         public string Description { get; set; }
+
+        public string Spotify_Id { get; set; }
     }
 }

@@ -6,9 +6,11 @@
 
 <h2>Song list</h2>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create", new { albumId = ViewBag.AlbumId })
-</p>*@
+<p>
+    <button type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create", new { albumId = ViewBag.AlbumId })
+    </button>
+</p>
 <table class="table table-hover">
     <tr>
         <th>
