@@ -1,7 +1,4 @@
-﻿@*@using PagedList.Mvc;
-@model PagedList.IPagedList<searchArtist.Artists>*@
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -49,6 +46,11 @@
                         {
                             <td><img height="150" width="150" src="@image.Url"></td>
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
+                            <td>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id })
+                                </button>
+                            </td>
                         }
                     }
 
@@ -92,9 +94,5 @@
 
 
         </table>
-        @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-        @*Html.PagedListPager(PagedList.IPagedList<ViewData["Artists"]>, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
     </div>
 }
