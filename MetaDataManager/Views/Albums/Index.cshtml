@@ -36,7 +36,7 @@
                     {
                         if (@image.Width == 64)
                         {
-                            <td><img height="100" width="100" src="@image.Url"></td>
+                            <td><img src="@image.Url"></td>
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
                             <td>
                                 <button type="button" class="btn btn-primary btnAddAlbum" artistId="@artist.Album.Id" albumId="@artist.Id" >
@@ -55,7 +55,7 @@
 }
 
 
-<h2>Album List</h2>
+<h2>My Album List</h2>
 
 <p>
     <button type="button" class="btn btn-primary">

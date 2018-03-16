@@ -98,8 +98,8 @@ namespace MetaDataManager.Controllers
             }
 
             ViewBag.ArtistId = artistId;
-
-            return View(db.Albums.Where(x => x.ArtistId == artistId).ToList());
+            return View();
+            //return View(db.Albums.Where(x => x.ArtistId == artistId).ToList());
         }
 
         // GET: Albums/Details/5
@@ -274,7 +274,11 @@ namespace MetaDataManager.Controllers
                             Id = albumRow.Id,
                             Name = searchAlbum.Name,
                             Tracks = searchAlbum.Tracks.Total,
-                            ArtistId = albumRow.ArtistId,
+                            Label = searchAlbum.Label,
+                            Release_Date = searchAlbum.ReleaseDate,
+                            Image = searchAlbum.Images[2].Url,
+                            ArtistId = searchAlbum.Artists[0].Id,
+                            Artist_Name = searchAlbum.Artists[0].Name,
                             Spotify_Id = albumRow.Spotify_Id,
                             Playlist_Id = albumRow.Playlist_Id
                         };

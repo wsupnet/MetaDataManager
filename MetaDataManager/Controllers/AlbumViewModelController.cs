@@ -14,19 +14,19 @@ namespace MetaDataManager.Controllers
         // GET: AlbumViewModel
         public ActionResult Index()
         {
-            var Results =
-                (from Artist in db.Artists
-                 join Album in db.Albums
-                 on Artist.Id equals Album.ArtistId
-                 select new AlbumViewModel
-                 {
-                     Name = Album.Name,
-                     Artist = Artist.Name,
-                 }).ToList();
+            //var Results =
+            //    (from Artist in db.Artists
+            //     join Album in db.Albums
+            //     on Artist.Id equals Album.ArtistId
+            //     select new AlbumViewModel
+            //     {
+            //         Name = Album.Name,
+            //         Artist = Artist.Name,
+            //     }).ToList();
 
 
 
-            return View(Results);
+            return View();
         }
     }
 }

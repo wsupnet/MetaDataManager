@@ -270,6 +270,22 @@
     <Compile Include="Migrations\201803020134087_UpdatedArtistModel1.Designer.cs">
       <DependentUpon>201803020134087_UpdatedArtistModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803161154568_AddedLabelAndReleaseDateColumns.cs" />
+    <Compile Include="Migrations\201803161154568_AddedLabelAndReleaseDateColumns.Designer.cs">
+      <DependentUpon>201803161154568_AddedLabelAndReleaseDateColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161236027_AddedColumnForAlbumArt.cs" />
+    <Compile Include="Migrations\201803161236027_AddedColumnForAlbumArt.Designer.cs">
+      <DependentUpon>201803161236027_AddedColumnForAlbumArt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161338580_ChangedArtistIdForAlbumToTypeString.cs" />
+    <Compile Include="Migrations\201803161338580_ChangedArtistIdForAlbumToTypeString.Designer.cs">
+      <DependentUpon>201803161338580_ChangedArtistIdForAlbumToTypeString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803161347563_AddedArtist_NameToAlbumTable.cs" />
+    <Compile Include="Migrations\201803161347563_AddedArtist_NameToAlbumTable.Designer.cs">
+      <DependentUpon>201803161347563_AddedArtist_NameToAlbumTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -450,6 +466,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803020134087_UpdatedArtistModel1.resx">
       <DependentUpon>201803020134087_UpdatedArtistModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161154568_AddedLabelAndReleaseDateColumns.resx">
+      <DependentUpon>201803161154568_AddedLabelAndReleaseDateColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161236027_AddedColumnForAlbumArt.resx">
+      <DependentUpon>201803161236027_AddedColumnForAlbumArt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161338580_ChangedArtistIdForAlbumToTypeString.resx">
+      <DependentUpon>201803161338580_ChangedArtistIdForAlbumToTypeString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803161347563_AddedArtist_NameToAlbumTable.resx">
+      <DependentUpon>201803161347563_AddedArtist_NameToAlbumTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
