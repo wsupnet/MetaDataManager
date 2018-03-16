@@ -68,7 +68,7 @@ namespace MetaDataManager.Controllers
                         //Create a temporary model so we can add it to the model list above
                         var tempModel = new Album
                         {
-                            Name = searchTrack.Album.Name,
+                            Name = searchTrack.Name,
                             Tracks = album.Tracks,
                             ArtistId = album.ArtistId,
                             Spotify_Id = album.Spotify_Id,
@@ -78,6 +78,21 @@ namespace MetaDataManager.Controllers
                     }
                     
                 }
+
+                //List<Song> model2 = new List<Song>();
+                //foreach ( var song in db.Songs)
+                //{
+                //    if (song.Spotify_Id == null)
+                //    {
+                //        var searchTracks = spotify.GetTrack(song.Spotify_Id, "");
+
+                //        var tempModel2 = new Song
+                //        {
+                //            Title = searchTracks,
+                //        }
+                //    }
+                //}
+
                 //returns the List we made referencing the Spotify_Id of the album
                 return View(model);
             }
@@ -214,13 +229,91 @@ namespace MetaDataManager.Controllers
                     Spotify_Id = songId,
                     Playlist_Id = albumId
                 };
+                //foreach(var song in db.Songs)
+                //{
+                //    Song track = new Song
+                //    {
+                //        Spotify_Id = 
+                //    }
+                //}
 
                 db.Albums.Add(album);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //Create the auth object
+                var auth = new ClientCredentialsAuth()
+                {
+                    //Your client Id
+                    ClientId = "d465cd5175d04b038cca6f1679643396",
+                    //Your client secret UNSECURE!!
+                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
+                    //How many permissions we need?
+                    Scope = Scope.UserReadPrivate,
+                };
+
+                Token token = auth.DoAuth();
+                var spotify = new SpotifyWebAPI()
+                {
+                    TokenType = token.TokenType,
+                    AccessToken = token.AccessToken,
+                    UseAuth = true
+                };
+
+                List<Album> albumList = new List<Album>();
+
+                //Created a list so we can go through each row
+                var albums = db.Albums.ToList();
+                foreach(var albumRow in albums)
+                {
+                    if (albumRow.Spotify_Id != null) // If the Spotify_Id is not null
+                    {
+                        //var name = GetSpotifyArtist(albumRow.Spotify_Id); //Getting the name of the album
+                        var searchAlbum = spotify.GetAlbum(albumRow.Spotify_Id, "");
+                        Album newAlbum = new Album
+                        {
+                            Id = albumRow.Id,
+                            Name = searchAlbum.Name,
+                            Tracks = searchAlbum.Tracks.Total,
+                            ArtistId = albumRow.ArtistId,
+                            Spotify_Id = albumRow.Spotify_Id,
+                            Playlist_Id = albumRow.Playlist_Id
+                        };
+                        albumList.Add(newAlbum);
+                    }
+                }
+                return PartialView("_PartialAlbumTable", albumList);
+
+                //return RedirectToAction("Index");
             }
 
             return View("Index");
+        }
+
+        private string GetSpotifyArtist(string albumId)
+        {
+            var auth = new ClientCredentialsAuth()
+            {
+                //Your client Id
+                ClientId = "d465cd5175d04b038cca6f1679643396",
+                //Your client secret UNSECURE!!
+                ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
+                //How many permissions we need?
+                Scope = Scope.UserReadPrivate,
+            };
+
+            Token token = auth.DoAuth();
+            var spotify = new SpotifyWebAPI()
+            {
+                TokenType = token.TokenType,
+                AccessToken = token.AccessToken,
+                UseAuth = true
+            };
+
+            //Searches for songName
+            var songName = spotify.SearchItems(albumId, SpotifyAPI.Web.Enums.SearchType.Track);
+
+
+            return songName.Tracks.Items[0].Album.Name; //Find out how to get just the name of the album
         }
     }
 }

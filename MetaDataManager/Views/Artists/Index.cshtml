@@ -40,7 +40,7 @@
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
                             <td>
                                 <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id })
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id, image = artist.Images[1].Url})
                                 </button>
                             </td>
                         }
@@ -69,11 +69,8 @@
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Name)</span></h4>
         </th>
         <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.YearFormed)</span></h4>
-        </th>
-        @*<th>
             @Html.DisplayNameFor(model => model.Website)
-        </th>*@
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -82,10 +79,8 @@
             <a target="_blank" href="https://open.spotify.com/artist/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.YearFormed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
+            @*<img src="@Html.DisplayFor(modelItem => item.Website)"/>*@
+            @*<img src="https://i.scdn.co/image/cfdb579db30a106564e1ae497d58381fd1e09941" width="100" height="100"/>*@
         </td>
         <td>
             <button type="button" class="btn btn-default btn-font-black btn-sm">

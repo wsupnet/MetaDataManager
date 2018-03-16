@@ -39,7 +39,7 @@
                             <td><img height="100" width="100" src="@image.Url"></td>
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
                             <td>
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary btnAddAlbum" artistId="@artist.Album.Id" albumId="@artist.Id" >
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumId = artist.Album.Id, songId = artist.Id })
                                 </button>
                             </td>
@@ -63,62 +63,34 @@
     </button>
 </p>
 
-<table class="table table-hover">
-    <tr>
-        <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Name)</span></h4>
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Artist)
-        </th>*@
-        <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Tracks)</span></h4>
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>*@
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <a target="_blank" href="https://open.spotify.com/track/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Artist)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Tracks)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>*@
-        <td>
-            <button type="button" class="btn btn-default btn-font-black btn-sm">
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-            </button>
-
-            <button type="button" class="btn btn-info btn-sm">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
-            </button>
-
-            <button type="button" class="btn btn-primary btn-sm">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Song", "AddSong", new { id = item.Id })
-            </button>
-
-            <button type="button" class="btn btn-danger btn-sm">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Spotify_Id })
-            </button>
-
-
-</td>
-    </tr>
-}
-</table>
+<div id="partialAlbumTable"></div>
 
 <p>
     <button type="button" class="btn btn-default btn-font-black btn-sm">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to Artist list", "Index", "Artists")
     </button>
 </p>
+
+@section scripts{
+    <script type="text/javascript">
+        $(".btnAddAlbum").click(function (e) {
+            e.preventDefault(); //Prevent postback
+
+            var artistId = $(this).attr("artistId");
+            var albumId = $(this).attr("albumId");
+            var url = "/Albums/Add?albumId="+ albumId +"&songId="+ artistId  +"";
+
+            console.log(url);
+
+            $.ajax({
+                type: "GET",
+                url: url,
+            }).done(function (e) {
+                $("#partialAlbumTable").html(e);
+                console.log("done");
+            });
+
+            console.log(albumId);
+        });
+    </script>
+}

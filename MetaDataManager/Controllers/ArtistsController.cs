@@ -202,7 +202,7 @@ namespace MetaDataManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Add(string Spot_Id)
+        public ActionResult Add(string Spot_Id, string image)
         {
             if (ModelState.IsValid)
             {
@@ -210,7 +210,8 @@ namespace MetaDataManager.Controllers
                 //Basically populating the properties/fields
                 Artist artist = new Artist
                 {
-                    Spotify_Id = Spot_Id
+                    Spotify_Id = Spot_Id,
+                    Website = image
                 };
 
                 db.Artists.Add(artist);
