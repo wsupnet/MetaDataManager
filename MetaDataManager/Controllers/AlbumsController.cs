@@ -79,20 +79,6 @@ namespace MetaDataManager.Controllers
                     
                 }
 
-                //List<Song> model2 = new List<Song>();
-                //foreach ( var song in db.Songs)
-                //{
-                //    if (song.Spotify_Id == null)
-                //    {
-                //        var searchTracks = spotify.GetTrack(song.Spotify_Id, "");
-
-                //        var tempModel2 = new Song
-                //        {
-                //            Title = searchTracks,
-                //        }
-                //    }
-                //}
-
                 //returns the List we made referencing the Spotify_Id of the album
                 return View(model);
             }

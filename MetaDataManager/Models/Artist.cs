@@ -14,13 +14,14 @@ namespace MetaDataManager.Models
 
         public string Name { get; set; }
 
-        [DisplayName("Year")]
-        public int YearFormed { get; set; }
+        public int Popularity { get; set; }
 
-        public string Website { get; set; }
+        public string Image { get; set; }
 
         [DisplayName("Artist Bio")]
         public string Description { get; set; }
+
+        public string Website { get; set; }
 
         public string Spotify_Id { get; set; }
     }

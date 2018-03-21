@@ -66,8 +66,13 @@ namespace MetaDataManager.Controllers
                         //Create a temporary model so we can add it to the model list above
                         var tempModel = new Artist
                         {
+                            Id = artist.Id,
                             Name = searchTrack.Name,
                             Spotify_Id = artist.Spotify_Id,
+                            Popularity = searchTrack.Popularity,
+                            Image = searchTrack.Images[2].Url,
+                            Description = artist.Description,
+                            Website = artist.Website
                         };
                         model.Add(tempModel); //Adding our results to the model we created earlier
                     }
@@ -140,7 +145,7 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,YearFormed,Website,Description")] Artist artist)
+        public ActionResult Edit([Bind(Include = "Id,Name,Website,Description")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -211,7 +216,6 @@ namespace MetaDataManager.Controllers
                 Artist artist = new Artist
                 {
                     Spotify_Id = Spot_Id,
-                    Website = image
                 };
 
                 db.Artists.Add(artist);
