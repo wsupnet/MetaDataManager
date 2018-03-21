@@ -276,7 +276,7 @@ namespace MetaDataManager.Controllers
                             Tracks = searchAlbum.Tracks.Total,
                             Label = searchAlbum.Label,
                             Release_Date = searchAlbum.ReleaseDate,
-                            Image = searchAlbum.Images[2].Url,
+                            Image = searchAlbum.Images[1].Url,
                             ArtistId = searchAlbum.Artists[0].Id,
                             Artist_Name = searchAlbum.Artists[0].Name,
                             Spotify_Id = albumRow.Spotify_Id,
