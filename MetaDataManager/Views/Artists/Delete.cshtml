@@ -21,19 +21,29 @@
         <dt>
             @Html.DisplayNameFor(model => model.Website)
         </dt>
-
+        @if (Model.Website == null)
+        {
+            <dd>No data</dd>
+        }
+        else
+        {
         <dd>
             @Html.DisplayFor(model => model.Website)
         </dd>
-
+        }
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
+        @if (Model.Website == null)
+        {
+            <dd>No data</dd>
+        }
+        else
+        {
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-
+        }
     </dl>
 
     @using (Html.BeginForm()) {

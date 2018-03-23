@@ -41,3 +41,7 @@ textarea {
 .caption a {
     text-overflow: ellipsis;
 }
+
+form .btn-inline {
+    display: inline-block;
+}

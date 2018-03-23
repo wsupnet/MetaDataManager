@@ -22,7 +22,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Artists
-        public ActionResult Index(string Spot_Id, int? page, string sortBy, ArtistNameModel artistNameModel)
+        public ActionResult Index(string Spot_Id, int? page, string search, string searchBy, string sortBy, ArtistNameModel artistNameModel)
         {
             if (ModelState.IsValid)
             {
@@ -82,6 +82,13 @@ namespace MetaDataManager.Controllers
 
                 var artists = model.AsQueryable();
 
+                //Searches Artist by name 
+                if(searchBy == "Name")
+                {
+                    artists = artists.Where(x => x.Name.ToLower().StartsWith(search) || search == null);
+                }
+
+                //Switch statement that controls how the List of Artists is sorted
                 switch (sortBy)
                 {
                     case "Name desc":
@@ -98,7 +105,7 @@ namespace MetaDataManager.Controllers
                         break;
 
                 }
-                int pageSize = 5;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 return View(artists.ToPagedList(pageNumber, pageSize));
             }
