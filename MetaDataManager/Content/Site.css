@@ -1,7 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    font-family: "Lucida Grande";
+    font-size: 14px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif; 
 }
 
 /* Set padding to keep content from hitting the edges */

@@ -13,6 +13,7 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
 using SpotifyAPI.Web.Enums;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace MetaDataManager.Controllers
 {
@@ -21,7 +22,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Artists
-        public ActionResult Index(string Spot_Id, ArtistNameModel artistNameModel)
+        public ActionResult Index(string Spot_Id, int? page, string sortBy, ArtistNameModel artistNameModel)
         {
             if (ModelState.IsValid)
             {
@@ -53,8 +54,6 @@ namespace MetaDataManager.Controllers
                     ViewData["Artists"] = searchArtist.Artists.Items.ToList();
                 }
 
-
-
                 List<Artist> model = new List<Artist>(); //Create a list so we can add items 
                 foreach (var artist in db.Artists) // For each album you find in database of albums...
                 {
@@ -75,13 +74,33 @@ namespace MetaDataManager.Controllers
                             Website = artist.Website
                         };
                         model.Add(tempModel); //Adding our results to the model we created earlier
-                    }
-
-                    //returns the List we made referencing the Spotify_Id of the album
-                    
+                    }                    
                 }
 
-                return View(model);
+                ViewBag.SortNameParameter = string.IsNullOrEmpty(sortBy) ? "Name desc" : "";
+                ViewBag.SortPopularityParameter = sortBy == "Popularity" ? "Pop desc" : "Popularity";
+
+                var artists = model.AsQueryable();
+
+                switch (sortBy)
+                {
+                    case "Name desc":
+                        artists = artists.OrderByDescending(x => x.Name);
+                        break;
+                    case "Pop desc":
+                        artists = artists.OrderByDescending(x => x.Popularity);
+                        break;
+                    case "Popularity":
+                        artists = artists.OrderBy(x => x.Popularity);
+                        break;
+                    default:
+                        artists = artists.OrderBy(x => x.Name);
+                        break;
+
+                }
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(artists.ToPagedList(pageNumber, pageSize));
             }
 
             return View(db.Artists.ToList());
@@ -113,7 +132,7 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,YearFormed,Website,Description")] Artist artist)
+        public ActionResult Create([Bind(Include = "Id,Name,Website,Description")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +164,7 @@ namespace MetaDataManager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Website,Description")] Artist artist)
+        public ActionResult Edit([Bind(Include = "Id,Name,Website,Description,Spotify_Id")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -196,18 +215,8 @@ namespace MetaDataManager.Controllers
             return RedirectToAction("Index", "Albums", new { artistId = Id });
         }
 
-        public ActionResult RedirectToExternalSite(int Id)
-        {
-            //Artist model = new Artist();
-            Artist model = db.Artists.Find(Id);
-
-            return Redirect(model.Website);
-            //return String.Format("<a href='http://{0}' target="_blank">{1}</a>", url, text);
-
-        }
-
         [HttpGet]
-        public ActionResult Add(string Spot_Id, string image)
+        public ActionResult Add(string Spot_Id, string image, string aName)
         {
             if (ModelState.IsValid)
             {
@@ -216,6 +225,7 @@ namespace MetaDataManager.Controllers
                 Artist artist = new Artist
                 {
                     Spotify_Id = Spot_Id,
+                    Name = aName
                 };
 
                 db.Artists.Add(artist);

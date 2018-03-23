@@ -13,6 +13,7 @@ using SpotifyAPI.Web.Models;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace MetaDataManager.Controllers
 {
@@ -21,7 +22,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Albums
-        public ActionResult Index(int? artistId, string songId, string albumId, ArtistNameModel artistNameModel)
+        public ActionResult Index(int? artistId, string songId, string albumId, int? page, ArtistNameModel artistNameModel)
         {
 
             if (artistId == null)
@@ -78,13 +79,16 @@ namespace MetaDataManager.Controllers
                     }
                     
                 }
-
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(model.ToPagedList(pageNumber, pageSize));
                 //returns the List we made referencing the Spotify_Id of the album
-                return View(model);
+                //return View(model);
             }
 
             ViewBag.ArtistId = artistId;
             return View();
+
             //return View(db.Albums.Where(x => x.ArtistId == artistId).ToList());
         }
 

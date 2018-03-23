@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MetaDataManager.Models.Artist>
+﻿@using PagedList.Mvc;
+@*@model IEnumerable<MetaDataManager.Models.Artist>*@
+@model PagedList.IPagedList<MetaDataManager.Models.Artist>
+
 
 @{
     ViewBag.Title = "Index";
@@ -9,7 +12,7 @@
 
     <!--Artist Name Form Box-->
     <div class="form-group">
-        <label for="ArtistName">Search for an Artist</label>
+        <label for="ArtistName">Search for an Artist to add to your list</label>
         <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist">
         <br />
         <button class="btn btn-primary" type="submit">Search</button>
@@ -40,7 +43,7 @@
                             <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Id">@artist.Name</a></td>
                             <td>
                                 <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id, image = artist.Images[1].Url})
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { Spot_Id = artist.Id, image = artist.Images[1].Url, aName = artist.Name})
                                 </button>
                             </td>
                         }
@@ -63,60 +66,97 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create")
     </button>
 </p>
+
+@*<p>
+    @using (@Html.BeginForm("Index", "Artists", FormMethod.Get))
+    {
+    <b> Search by:</b> @Html.RadioButton("searchBy", "Name", true) <text>Name</text> <br/>
+    @Html.TextBox("search") <input type="submit" value="Search" />
+    }
+</p>*@
+
+<p>Found @Model.TotalItemCount Result(s)</p>
+
 <table class="table table-hover table-condensed">
     <tr>
         <th>
             <p></p>
         </th>
         <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Name)</span></h4>
+            @Html.ActionLink("Name", "Index", new { sortBy = ViewBag.SortNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] })
         </th>
         <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Popularity)</span></h4>
-        </th>
-        @*<th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Website)</span></h4>
+            @Html.ActionLink("Popularity", "Index", new { sortBy = ViewBag.SortPopularityParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] })
         </th>
         <th>
-            <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Description)</span></h4>
-        </th>*@
+            Website
+        </th>
+        <th>
+           Artist Bio
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <img style="border-radius: 50%;"width="100" height="100" src="@Html.DisplayFor(modelItem => item.Image)" />
-        </td>
-        <td>
-            <a target="_blank" href="https://open.spotify.com/artist/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Popularity) / 100
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>*@
-        <td>
-            <button type="button" class="btn btn-default btn-font-black btn-sm">
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-            </button>
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3">No rows match your search criteria</td>
+        </tr>
+    }
+    else
+    {
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a target="_blank" href="https://open.spotify.com/artist/@item.Spotify_Id"><img style="border-radius: 50%;" width="100" height="100" src="@Html.DisplayFor(modelItem => item.Image)" /></a>
+            </td>
+            <td>
+                <a target="_blank" href="https://open.spotify.com/artist/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Popularity) / 100
+            </td>
 
-            <button type="button" class="btn btn-info btn-sm">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
-            </button>
+            @if (item.Website == null)
+            {         
+                <td>No data</td> 
+            }
+            else
+            {
+                <td>@Html.DisplayFor(modelItem => item.Website)</td>
+            }
 
-            <button type="button" class="btn btn-primary btn-sm">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Album", "AddDiscography", new { id = item.Id })
-            </button>
+            @if (item.Description == null)
+            {
+                <td>No data</td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            }
 
-            <button type="button" class="btn btn-danger btn-sm">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </button>
-        </td>
-    </tr>
-}
+            <td>
+                <button type="button" class="btn btn-default btn-font-black btn-sm">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                </button>
+
+                <button type="button" class="btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Album", "AddDiscography", new { id = item.Id })
+                </button>
+
+                <button type="button" class="btn btn-danger btn-sm">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </button>
+            </td>
+        </tr>
+    }
+    }
 
 </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"], sortBy = Request["sortBy"] }), 
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
