@@ -294,6 +294,14 @@
     <Compile Include="Migrations\201803210158527_AddedImageColumnToArtist.Designer.cs">
       <DependentUpon>201803210158527_AddedImageColumnToArtist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803291431070_AddedForeignKeyToSongModel.cs" />
+    <Compile Include="Migrations\201803291431070_AddedForeignKeyToSongModel.Designer.cs">
+      <DependentUpon>201803291431070_AddedForeignKeyToSongModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803291435387_UpdateSongModel1.cs" />
+    <Compile Include="Migrations\201803291435387_UpdateSongModel1.Designer.cs">
+      <DependentUpon>201803291435387_UpdateSongModel1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -494,6 +502,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803210158527_AddedImageColumnToArtist.resx">
       <DependentUpon>201803210158527_AddedImageColumnToArtist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803291431070_AddedForeignKeyToSongModel.resx">
+      <DependentUpon>201803291431070_AddedForeignKeyToSongModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803291435387_UpdateSongModel1.resx">
+      <DependentUpon>201803291435387_UpdateSongModel1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

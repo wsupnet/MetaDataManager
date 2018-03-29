@@ -27,6 +27,8 @@ namespace MetaDataManager.Models
 
         public string ArtistId { get; set; }
 
+        public int AlbumId { get; set; }
+
         [DisplayName("Artist")]
         public string Artist_Name { get; set; }
 

@@ -12,7 +12,7 @@
     </button>
 </p>
 
-@if (ViewData["Tracks"] != null)
+@*@if (ViewData["Tracks"] != null)
 {
     <ul>
         @foreach(var track in (dynamic)ViewData["Tracks"])
@@ -20,7 +20,37 @@
             <li>@track.Name</li>
         }
     </ul>
-}
+}*@
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Album Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlbumId)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<br/>
+
+<button type="button" class="btn btn-default btn-font-black">
+    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span><a href="javascript:history.back()">Back to List</a>
+</button>
 
 
 @*<table class="table table-hover">

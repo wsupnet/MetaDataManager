@@ -22,6 +22,8 @@ namespace MetaDataManager.Controllers
         // GET: Songs
         public ActionResult Index(int? albumId)
         {
+            List<Song> model = new List<Song>();
+
             if (ModelState.IsValid)
             {
                 //Create the auth object
@@ -43,7 +45,6 @@ namespace MetaDataManager.Controllers
                     UseAuth = true
                 };
 
-                List<Song> model = new List<Song>();
                 foreach (var album in db.Albums)
                 {
                     if (album.Spotify_Id != null) // If the Spotify_Id is not null
@@ -55,17 +56,26 @@ namespace MetaDataManager.Controllers
                         {
                             var tempModel = new Song
                             {
-                                Title = track.Name,
+                                Name = track.Name,
+                                AlbumId = album.Id
                             };
                             model.Add(tempModel);
                         };
                         ViewData["Tracks"] = getTrack.Items.ToList();
                     }
                 }
-                return View(model.ToList());
+                if (albumId == null)
+                {
+                    return View(model.ToList());
+                }
+                else
+                {
+                    return View(model.Where(x => x.AlbumId == albumId).ToList());
+                }
+
             }
 
-            return View(db.Songs.Where(x => x.AlbumId == albumId).ToList());
+            return View();
         }
 
         // GET: Songs/Details/5

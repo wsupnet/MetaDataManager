@@ -81,6 +81,7 @@ namespace MetaDataManager.Controllers
                             ArtistId = searchAlbum.Artists[0].Id,
                             Artist_Name = searchAlbum.Artists[0].Name,                  
                             Spotify_Id = album.Spotify_Id,
+                            AlbumId = album.Id
 
                         };
 
@@ -254,13 +255,13 @@ namespace MetaDataManager.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult AddSong(int Id)
+        public ActionResult SeeTracks(int albumId)
         {
-            return RedirectToAction("Index", "Songs", new { albumId = Id });
+            return RedirectToAction("Index", "Songs", new { albumId = albumId });
         }
 
         [HttpGet]
-        public ActionResult Add(string albumId, string albumName)
+        public ActionResult Add(string albumSpotId, string albumName)
         {
             if (ModelState.IsValid)
             {
@@ -269,7 +270,7 @@ namespace MetaDataManager.Controllers
                 Album album = new Album
                 {
                     Name = albumName,
-                    Spotify_Id = albumId,
+                    Spotify_Id = albumSpotId,
                 };
                 db.Albums.Add(album);
                 db.SaveChanges();
