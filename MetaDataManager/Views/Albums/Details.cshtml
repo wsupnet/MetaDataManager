@@ -31,9 +31,11 @@
 </div>
 <p>
     <button type="button" class="btn btn-default btn-font-black">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to List", "Index")
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span><a href="javascript:history.back()">Back to List</a>
     </button> |
     <button type="button" class="btn btn-default btn-font-black">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     </button>
 </p>
+
+

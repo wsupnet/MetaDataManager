@@ -1,6 +1,6 @@
 ﻿@using PagedList.Mvc;
-@*@model IEnumerable<MetaDataManager.Models.Album>*@
-@model PagedList.IPagedList<MetaDataManager.Models.Album>
+@model IEnumerable<MetaDataManager.Models.Album>
+@*@model PagedList.IPagedList<MetaDataManager.Models.Album>*@
 
 
 @{
@@ -12,7 +12,7 @@
     <form method="POST">
         <!--Song Name Form Box-->
         <div class="form-group">
-            <label for="SongName">Search for Album</label>
+            <label for="SongName">Search for an Album</label>
             <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album" />
             <br />
             <button class="btn btn-primary" type="submit">Search</button>
@@ -22,7 +22,6 @@
 
 @if (ViewData["Songs"] != null)
 {
-
     <div class="table-responsive-md table-condensed">
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -36,49 +35,171 @@
                 </tr>
             </thead>
 
-            @foreach (var artist in (dynamic)ViewData["Songs"])
+
+            @foreach (var album in (dynamic)ViewData["Songs"])
             {
+
                 <tr>
-                    @foreach (var image in (dynamic)artist.Album.Images)
+
+                    @foreach (var image in (dynamic)album.Images)
                     {
                         if (@image.Width == 64)
                         {
                             <td><img src="@image.Url"></td>
-                            <td><a target="_blank" href="https://open.spotify.com/artist/@artist.Artists[0].Id">@artist.Album.Name</a></td>
+                            <td><a target="_blank" href="https://open.spotify.com/album/@album.Id">@album.Name</a></td>
                             <td>
-                                <button type="button" class="btn btn-primary btnAddAlbum" artistId="@artist.Album.Id" albumId="@artist.Id" >
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumId = artist.Album.Id, songId = artist.Id })
+                                <button type="button" class="btn btn-primary btnAddAlbum" albumId="@album.Id" albumName="@album.Name">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumId = album.Id, albumName = album.Name})
                                 </button>
                             </td>
-                            
                         }
                     }
-
-                </tr>
-
-            }
-
+                </tr>  
+             }
 
         </table>
-        <div style="margin:5px;">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-        </div>
     </div>
 }
 
 
 <h2>My Album List</h2>
 
-<p>
+@*<p>
     <button type="button" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create", new { artistId = ViewBag.ArtistId })
     </button>
+</p>*@
+<div>
+<button type="button" class="btn btn-primary" id="toggleView">Details</button>
+</div>
+
+@*<div id="partialAlbumTable"></div>*@
+
+<p>
+    @using (@Html.BeginForm("Index", "Albums", FormMethod.Get))
+    {
+        <b> Search by:</b> 
+        @Html.RadioButton("searchBy", "Name", true) <text>Name</text> <br/>
+        @Html.TextBox("search") <input type="submit" value="Search" />
+    }
 </p>
 
-<div id="partialAlbumTable"></div>
+<p>Sort by: @Html.ActionLink("Name", "Index", new { sortBy = ViewBag.SortNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }) | 
+    @Html.ActionLink("Artist", "Index", new { sortBy = ViewBag.SortArtistParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }) | 
+    @Html.ActionLink("Date", "Index", new { sortBy = ViewBag.SortDateParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }) | 
+    @Html.ActionLink("Record Label", "Index", new { sortBy = ViewBag.SortRecordParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }) 
+    </p>
+
+
+<div id="plainView">
+    <div class="row">
+        @foreach (var item in Model)
+            {
+            <div class="col-sm-6 col-md-3">
+                <div>
+
+                    <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">
+                        <img class="hoverable" width="180" height="180" style=" border-radius: 10px; border: 1px solid black;" src="@Html.DisplayFor(modelitem => item.Image)" />
+                    </a>
+                    <div class="caption">
+                        <a style="text-overflow:ellipsis;" target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">@Html.DisplayFor(modelitem => item.Name)</a>
+                        <div><a target="_blank" href="https://open.spotify.com/artist/@item.ArtistId">@Html.DisplayFor(modelitem => item.Artist_Name)</a></div>
+                    </div>
+
+                    <div class="dropdown" style=" padding-bottom: 1em; padding-top: 1em;">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+                            <li>@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+                            <li><a href="#">See Songs</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<table id="detailView" class="table table-hover tablesorter" style="display: none" >
+    <thead>
+        <tr>
+            <th>
+                <p></p>
+            </th>
+            <th>
+                Name @*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Name)</span></h4>*@
+            </th>
+            <th>
+                Artist@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Artist_Name)</span></h4>*@
+            </th>
+            <th>
+                No. of Tracks@*<h4><span class="label label-default">No. of @Html.DisplayNameFor(model => model.Tracks)</span></h4>*@
+            </th>
+            <th>
+                Record Label@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Label)</span></h4>*@
+            </th>
+            <th>
+                Release Date@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Release_Date)</span></h4>*@
+            </th>
+        </tr>
+    </thead>
+    
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="6">No rows match your search criteria</td>
+            </tr>
+        }
+        else
+        {
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <img width="60" height="60" src="@Html.DisplayFor(modelItem => item.Image)" />
+                    </td>
+                    <td>
+                        <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                    </td>
+                    <td>
+                        <a target="_blank" href="https://open.spotify.com/artist/@item.ArtistId">@Html.DisplayFor(modelItem => item.Artist_Name)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tracks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Release_Date)
+                    </td>
+                    <td>
+
+                        @*<button type="button" class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("Details", "Details", new { id = item.Id })
+                        </button>*@
+
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add Song", "AddSong", new { id = item.Id })
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </button>
+
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        }
+            
+</table>
 
 <p>
     <button type="button" class="btn btn-default btn-font-black btn-sm">
@@ -87,25 +208,55 @@
 </p>
 
 @section scripts{
-    <script type="text/javascript">
-        $(".btnAddAlbum").click(function (e) {
-            e.preventDefault(); //Prevent postback
-
-            var artistId = $(this).attr("artistId");
-            var albumId = $(this).attr("albumId");
-            var url = "/Albums/Add?albumId="+ albumId +"&songId="+ artistId  +"";
-
-            console.log(url);
-
-            $.ajax({
-                type: "GET",
-                url: url,
-            }).done(function (e) {
-                $("#partialAlbumTable").html(e);
-                console.log("done");
+    <script>
+        $(document).ready(function () {
+            $("#toggleView").on("click", function () {
+                $("#toggleView").text("Double Click for Plain View");
+                $("#detailView").show(1000);
+                $("#plainView").hide(1000, function () {
+                    $("#toggleView").dblclick("click", function () {
+                        $("#toggleView").text("Details");
+                        $("#detailView").hide(1000);
+                        $("#plainView").show(1000);
+                    });
+                });
+                });
             });
 
-            console.log(albumId);
-        });
     </script>
-}
+    }
+
+
+@*<div style="margin:5px;">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>*@
+
+@*@section scripts{
+        <script type="text/javascript">
+            $(".btnAddAlbum").click(function (e) {
+                e.preventDefault(); //Prevent postback
+
+                var artistId = $(this).attr("artistId");
+                var albumId = $(this).attr("albumId");
+                var url = "/Albums/Add?albumId="+ albumId +"&songId="+ artistId  +"";
+
+                console.log(url);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                }).done(function (e) {
+                    $("#partialAlbumTable").html(e);
+                    console.log("done");
+                });
+
+                console.log(albumId);
+            });
+                        //$("#toggleViewPlain").on("click", function () {
+                    //    
+
+        </script>
+    }*@

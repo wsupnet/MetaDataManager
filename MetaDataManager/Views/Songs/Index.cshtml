@@ -11,32 +11,44 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create", new { albumId = ViewBag.AlbumId })
     </button>
 </p>
-<table class="table table-hover">
+
+@if (ViewData["Tracks"] != null)
+{
+    <ul>
+        @foreach(var track in (dynamic)ViewData["Tracks"])
+        {
+            <li>@track.Name</li>
+        }
+    </ul>
+}
+
+
+@*<table class="table table-hover">
     <tr>
         <th>
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Title)</span></h4>
-        </th>
+        </th>*@
         @*<th>
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.AlbumName)</span></h4>
         </th>*@
         @*<th>
             <h4><span class="label label-default">@Html.DisplayNameFor(model => model.Year)</span></h4>
         </th>*@
-        <th></th>
-    </tr>
+        @*<th></th>
+    </tr>*@
 
-@foreach (var item in Model) {
+@*@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
-        </td>
+        </td>*@
         @*<td>
             @Html.DisplayFor(modelItem => item.AlbumName)
         </td>*@
         @*<td>
             @Html.DisplayFor(modelItem => item.Year)
         </td>*@
-        <td>
+        @*<td>
             <button type="button" class="btn btn-default btn-font-black btn-sm">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>@Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </button>
@@ -48,8 +60,8 @@
             <button type="button" class="btn btn-danger btn-sm">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </button>
-        </td>
-    </tr>
+        </td>*@
+    @*</tr>
 }
 
-</table>
+</table>*@

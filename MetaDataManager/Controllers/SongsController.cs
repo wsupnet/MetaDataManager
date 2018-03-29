@@ -22,7 +22,7 @@ namespace MetaDataManager.Controllers
         // GET: Songs
         public ActionResult Index(int? albumId)
         {
-            if (albumId == null)
+            if (ModelState.IsValid)
             {
                 //Create the auth object
                 var auth = new ClientCredentialsAuth()
@@ -43,38 +43,27 @@ namespace MetaDataManager.Controllers
                     UseAuth = true
                 };
 
-                List<Song> model = new List<Song>(); //Create a list so we can add items 
-                foreach (var song in db.Songs) // For each album you find in database of albums...
+                List<Song> model = new List<Song>();
+                foreach (var album in db.Albums)
                 {
-                    if (song.Spotify_Id != null) // If the Spotify_Id is not null
+                    if (album.Spotify_Id != null) // If the Spotify_Id is not null
                     {
-                        // It uses the spotify api and searches using the GetTrack method against the database 
-                        var searchTrack = spotify.GetTrack(song.Spotify_Id, "");
+                        //Gets the tracks based on the Id of the Album
+                        var getTrack = spotify.GetAlbumTracks(album.Spotify_Id, 50, 0, "");
 
-                        //Create a temporary model so we can add it to the model list above
-                        var tempModel = new Song
+                        foreach (var track in getTrack.Items)
                         {
-                            Title = searchTrack.Name,
-                            AlbumId = song.AlbumId,
-                            Spotify_Id = song.Spotify_Id,
-                            Playlist_Id = song.Playlist_Id
+                            var tempModel = new Song
+                            {
+                                Title = track.Name,
+                            };
+                            model.Add(tempModel);
                         };
-                        model.Add(tempModel); //Adding our results to the model we created earlier
+                        ViewData["Tracks"] = getTrack.Items.ToList();
                     }
-
                 }
-                //returns the List we made referencing the Spotify_Id of the album
-                return View(model);
+                return View(model.ToList());
             }
-
-
-
-            //if (albumId == null)
-            //{
-            //    return View(db.Songs.ToList());
-            //}
-
-            ViewBag.AlbumId = albumId;
 
             return View(db.Songs.Where(x => x.AlbumId == albumId).ToList());
         }

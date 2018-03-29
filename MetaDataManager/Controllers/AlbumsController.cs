@@ -22,10 +22,10 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Albums
-        public ActionResult Index(int? artistId, string songId, string albumId, int? page, ArtistNameModel artistNameModel)
+        public ActionResult Index(string songId, string albumId, int? page, string searchBy, string search, string sortBy, ArtistNameModel artistNameModel)
         {
 
-            if (artistId == null)
+            if (ModelState.IsValid)
             {
                 //Create the auth object
                  var auth = new ClientCredentialsAuth()
@@ -47,15 +47,13 @@ namespace MetaDataManager.Controllers
                 };
 
                 //Searches for songName
-                var songName = spotify.SearchItems(artistNameModel.SongName, SpotifyAPI.Web.Enums.SearchType.Track);
-
+                var songName = spotify.SearchItems(artistNameModel.SongName, SearchType.Album);
 
                 if (!string.IsNullOrEmpty(artistNameModel.SongName))
                 {
                     var result = songName.Tracks;
                     ViewData["SongJson"] = JsonConvert.SerializeObject(result);
-                    ViewData["Songs"] = songName.Tracks.Items.ToList();
-
+                    ViewData["Songs"] = songName.Albums.Items.ToList();
                 }
 
                 List<Album> model = new  List<Album>(); //Create a list so we can add items 
@@ -64,31 +62,86 @@ namespace MetaDataManager.Controllers
                     if (album.Spotify_Id != null) // If the Spotify_Id is not null
                     {
                         // It uses the spotify api and searches using the GetTrack method against the database 
-                        var searchTrack = spotify.GetTrack(album.Spotify_Id, ""); 
+                        var searchAlbum = spotify.GetAlbum(album.Spotify_Id, "");
 
+                        ////Get the Artist Name
+                        //if (!string.IsNullOrEmpty(artistNameModel.SongName))
+                        //{
+                        //    var artistInfo = songName.Tracks.Items.Where(x => x.Id == album.Spotify_Id).FirstOrDefault();
+                        //}
                         //Create a temporary model so we can add it to the model list above
                         var tempModel = new Album
                         {
-                            Name = searchTrack.Name,
-                            Tracks = album.Tracks,
-                            ArtistId = album.ArtistId,
+                            Id = album.Id,
+                            Name = searchAlbum.Name,
+                            Tracks = searchAlbum.Tracks.Total,
+                            Label = searchAlbum.Label,
+                            Release_Date = searchAlbum.ReleaseDate,
+                            Image = searchAlbum.Images[1].Url,
+                            ArtistId = searchAlbum.Artists[0].Id,
+                            Artist_Name = searchAlbum.Artists[0].Name,                  
                             Spotify_Id = album.Spotify_Id,
-                            Playlist_Id = album.Playlist_Id
+
                         };
+
                         model.Add(tempModel); //Adding our results to the model we created earlier
                     }
                     
                 }
-                int pageSize = 5;
-                int pageNumber = (page ?? 1);
-                return View(model.ToPagedList(pageNumber, pageSize));
+
+                //Responsible for sorting
+                ViewBag.SortNameParameter = string.IsNullOrEmpty(sortBy) ? "Name desc" : "";
+                ViewBag.SortArtistParameter = sortBy == "Artist" ? "Artist desc" : "Artist";
+                ViewBag.SortDateParameter = sortBy == "Date" ? "Date desc" : "Date";
+                ViewBag.SortRecordParameter = sortBy == "Record" ? "Record desc" : "Record";
+
+                var albums = model.AsQueryable();
+
+                //searches Album by Name
+                if (searchBy == "Name")
+                {
+                    albums = albums.Where(x => x.Name.ToLower().StartsWith(search) || search == null);
+                }
+
+                //Switch statement that controls how the List of Albums is sorted
+                switch (sortBy)
+                {
+                    case "Name desc":
+                        albums = albums.OrderByDescending(x => x.Name);
+                        break;
+                    case "Artist desc":
+                        albums = albums.OrderByDescending(x => x.Artist_Name);
+                        break;
+                    case "Artist":
+                        albums = albums.OrderBy(x => x.Artist_Name);
+                        break;
+                    case "Date desc":
+                        albums = albums.OrderByDescending(x => x.Release_Date);
+                        break;
+                    case "Date":
+                        albums = albums.OrderBy(x => x.Release_Date);
+                        break;
+                    case "Record desc":
+                        albums = albums.OrderByDescending(x => x.Label);
+                        break;
+                    case "Record":
+                        albums = albums.OrderBy(x => x.Label);
+                        break;
+                    default:
+                        albums = albums.OrderBy(x => x.Name);
+                        break;
+
+                }
+
+                //int pageSize = 5;
+                //int pageNumber = (page ?? 1);
                 //returns the List we made referencing the Spotify_Id of the album
+                //return View(model.ToPagedList(pageNumber, pageSize));
+                return View(albums.ToList());
                 //return View(model);
             }
 
-            ViewBag.ArtistId = artistId;
-            return View();
-
+            return View(db.Albums.ToList());
             //return View(db.Albums.Where(x => x.ArtistId == artistId).ToList());
         }
 
@@ -207,107 +260,48 @@ namespace MetaDataManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Add(string songId, string albumId)
+        public ActionResult Add(string albumId, string albumName)
         {
             if (ModelState.IsValid)
             {
-
                 //Creating a new instance of the Album class.
                 //Basically populating the properties/fields
                 Album album = new Album
                 {
-                    Spotify_Id = songId,
-                    Playlist_Id = albumId
+                    Name = albumName,
+                    Spotify_Id = albumId,
                 };
-                //foreach(var song in db.Songs)
-                //{
-                //    Song track = new Song
-                //    {
-                //        Spotify_Id = 
-                //    }
-                //}
-
                 db.Albums.Add(album);
                 db.SaveChanges();
-
-                //Create the auth object
-                var auth = new ClientCredentialsAuth()
-                {
-                    //Your client Id
-                    ClientId = "d465cd5175d04b038cca6f1679643396",
-                    //Your client secret UNSECURE!!
-                    ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
-                    //How many permissions we need?
-                    Scope = Scope.UserReadPrivate,
-                };
-
-                Token token = auth.DoAuth();
-                var spotify = new SpotifyWebAPI()
-                {
-                    TokenType = token.TokenType,
-                    AccessToken = token.AccessToken,
-                    UseAuth = true
-                };
-
-                List<Album> albumList = new List<Album>();
-
-                //Created a list so we can go through each row
-                var albums = db.Albums.ToList();
-                foreach(var albumRow in albums)
-                {
-                    if (albumRow.Spotify_Id != null) // If the Spotify_Id is not null
-                    {
-                        //var name = GetSpotifyArtist(albumRow.Spotify_Id); //Getting the name of the album
-                        var searchAlbum = spotify.GetAlbum(albumRow.Spotify_Id, "");
-                        Album newAlbum = new Album
-                        {
-                            Id = albumRow.Id,
-                            Name = searchAlbum.Name,
-                            Tracks = searchAlbum.Tracks.Total,
-                            Label = searchAlbum.Label,
-                            Release_Date = searchAlbum.ReleaseDate,
-                            Image = searchAlbum.Images[1].Url,
-                            ArtistId = searchAlbum.Artists[0].Id,
-                            Artist_Name = searchAlbum.Artists[0].Name,
-                            Spotify_Id = albumRow.Spotify_Id,
-                            Playlist_Id = albumRow.Playlist_Id
-                        };
-                        albumList.Add(newAlbum);
-                    }
-                }
-                return PartialView("_PartialAlbumTable", albumList);
-
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             return View("Index");
         }
 
-        private string GetSpotifyArtist(string albumId)
+        public ActionResult FullData()
         {
-            var auth = new ClientCredentialsAuth()
-            {
-                //Your client Id
-                ClientId = "d465cd5175d04b038cca6f1679643396",
-                //Your client secret UNSECURE!!
-                ClientSecret = "b136e21e115b49b0bb6afd6f3560192e",
-                //How many permissions we need?
-                Scope = Scope.UserReadPrivate,
-            };
+            /*
+             var entryPoint = (from ep in dbContext.tbl_EntryPoint
+                 join e in dbContext.tbl_Entry on ep.EID equals e.EID
+                 join t in dbContext.tbl_Title on e.TID equals t.TID
+                 where e.OwnerID == user.UID
+                 select new {
+                     UID = e.OwnerID,
+                     TID = e.TID,
+                     Title = t.Title,
+                     EID = e.EID
+                 }).Take(10);
+             */
 
-            Token token = auth.DoAuth();
-            var spotify = new SpotifyWebAPI()
-            {
-                TokenType = token.TokenType,
-                AccessToken = token.AccessToken,
-                UseAuth = true
-            };
+            var model = (from artist in db.Artists
+                         join album in db.Albums on artist.Name equals album.Artist_Name
+                         select new
+                         {
+                             Name = artist.Name
+                         });
 
-            //Searches for songName
-            var songName = spotify.SearchItems(albumId, SpotifyAPI.Web.Enums.SearchType.Track);
-
-
-            return songName.Tracks.Items[0].Album.Name; //Find out how to get just the name of the album
+            return View(model);
         }
     }
 }
