@@ -57,7 +57,13 @@ namespace MetaDataManager.Controllers
                             var tempModel = new Song
                             {
                                 Name = track.Name,
-                                AlbumId = album.Id
+                                AlbumId = album.Id,
+                                Artist_Name = track.Artists[0].Name,
+                                Track_Number = track.TrackNumber,
+                                Duration = track.DurationMs,
+                                Preview_Url = track.PreviewUrl,
+                                Disc_Number = track.DiscNumber,
+                                Spotify_Id = track.Id
                             };
                             model.Add(tempModel);
                         };

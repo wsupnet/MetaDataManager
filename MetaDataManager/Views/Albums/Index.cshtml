@@ -95,17 +95,15 @@
     <div class="row">
         @foreach (var item in Model)
             {
-            <div class="col-sm-6 col-md-3">
+            <div class="col-xs-6 col-sm-4 col-md-3">
                 <div>
-
                     <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">
                         <img class="hoverable" width="180" height="180" style=" border-radius: 10px; border: 1px solid black;" src="@Html.DisplayFor(modelitem => item.Image)" />
                     </a>
                     <div class="caption">
-                        <a style="text-overflow:ellipsis;" target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">@Html.DisplayFor(modelitem => item.Name)</a>
+                        <div style="width: 182.7px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;"><a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">@Html.DisplayFor(modelitem => item.Name)</a></div>
                         <div><a target="_blank" href="https://open.spotify.com/artist/@item.ArtistId">@Html.DisplayFor(modelitem => item.Artist_Name)</a></div>
                     </div>
-
                     <div class="dropdown" style=" padding-bottom: 1em; padding-top: 1em;">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <span class="caret"></span>
@@ -115,10 +113,9 @@
                             <li>@Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })</li>
                         </ul>
                     </div>
-
                 </div>
             </div>
-        }
+            }
     </div>
 </div>
 
@@ -184,7 +181,7 @@
                         </button>*@
 
                         <button type="button" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>@Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })
                         </button>
 
                         <button type="button" class="btn btn-danger btn-sm">

@@ -82,7 +82,6 @@ namespace MetaDataManager.Controllers
                             Artist_Name = searchAlbum.Artists[0].Name,                  
                             Spotify_Id = album.Spotify_Id,
                             AlbumId = album.Id
-
                         };
 
                         model.Add(tempModel); //Adding our results to the model we created earlier
@@ -102,6 +101,9 @@ namespace MetaDataManager.Controllers
                 if (searchBy == "Name")
                 {
                     albums = albums.Where(x => x.Name.ToLower().StartsWith(search) || search == null);
+                }
+                else
+                {
                 }
 
                 //Switch statement that controls how the List of Albums is sorted
@@ -284,22 +286,27 @@ namespace MetaDataManager.Controllers
         {
             /*
              var entryPoint = (from ep in dbContext.tbl_EntryPoint
-                 join e in dbContext.tbl_Entry on ep.EID equals e.EID
-                 join t in dbContext.tbl_Title on e.TID equals t.TID
-                 where e.OwnerID == user.UID
-                 select new {
-                     UID = e.OwnerID,
-                     TID = e.TID,
-                     Title = t.Title,
-                     EID = e.EID
-                 }).Take(10);
+                                 join e in dbContext.tbl_Entry on ep.EID equals e.EID
+                                 join t in dbContext.tbl_Title on e.TID equals t.TID
+                                 where e.OwnerID == user.UID
+                                 select new {
+                                     UID = e.OwnerID,
+                                     TID = e.TID,
+                                     Title = t.Title,
+                                     EID = e.EID
+                                 }).Take(10);
              */
 
             var model = (from artist in db.Artists
                          join album in db.Albums on artist.Name equals album.Artist_Name
+                         join song in db.Songs on album.Artist_Name equals song.Artist_Name
                          select new
                          {
-                             Name = artist.Name
+                             Name = song.Name,
+                             Albums = song.Albums,
+                             Artist = artist.Name,
+                             Duration = song.Duration,
+                             Preview_Url = song.Preview_Url
                          });
 
             return View(model);

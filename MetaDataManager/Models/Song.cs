@@ -15,6 +15,16 @@ namespace MetaDataManager.Models
         [DisplayName("Title")]
         public string Name { get; set; }
 
+        public int Track_Number { get; set; }
+
+        public int Duration { get; set; }
+
+        public string Preview_Url { get; set; }
+
+        public int Disc_Number { get; set; }
+
+        public string Artist_Name { get; set; }
+
         public int AlbumId { get; set; }
 
         [ForeignKey("AlbumId")]

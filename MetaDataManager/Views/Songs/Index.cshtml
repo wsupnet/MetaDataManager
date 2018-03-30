@@ -23,11 +23,15 @@
 }*@
 
 
-<table border="1">
+<table class="table table-striped table-hover" border="1">
     <thead>
         <tr>
+            <th>Track No.</th>
             <th>Name</th>
-            <th>Album Id</th>
+            <th>Artist</th>
+            <th>Disc Number</th>
+            <th>Duration</th>
+            <th>Preview</th>
         </tr>
     </thead>
     <tbody>
@@ -35,11 +39,34 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Track_Number)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AlbumId)
+                    <a target="_blank" href="https://open.spotify.com/track/@item.Spotify_Id">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disc_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                @if (item.Preview_Url == null)
+                {
+                    <td>Preview not available in your country</td>
+                }
+                else
+                {
+                <td>
+                    <audio controls>
+                        <source src="@Html.DisplayFor(modelItem => item.Preview_Url)">
+                        <source src="horse.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </td>
+                }
             </tr>
         }
     </tbody>
@@ -51,7 +78,6 @@
 <button type="button" class="btn btn-default btn-font-black">
     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span><a href="javascript:history.back()">Back to List</a>
 </button>
-
 
 @*<table class="table table-hover">
     <tr>
