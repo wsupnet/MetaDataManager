@@ -25,6 +25,10 @@ namespace MetaDataManager.Models
 
         public string Artist_Name { get; set; }
 
+        public string Album_Name { get; set; }
+
+        public string Album_SpotId { get; set; }
+
         public int AlbumId { get; set; }
 
         [ForeignKey("AlbumId")]

@@ -311,6 +311,14 @@
     <Compile Include="Migrations\201803292029241_AddedArtistNameToSongModel.Designer.cs">
       <DependentUpon>201803292029241_AddedArtistNameToSongModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803312227468_AddedAlbumNameColumnInSongModel.cs" />
+    <Compile Include="Migrations\201803312227468_AddedAlbumNameColumnInSongModel.Designer.cs">
+      <DependentUpon>201803312227468_AddedAlbumNameColumnInSongModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803312233524_AddedAlbum_SpotIdToSongModel.cs" />
+    <Compile Include="Migrations\201803312233524_AddedAlbum_SpotIdToSongModel.Designer.cs">
+      <DependentUpon>201803312233524_AddedAlbum_SpotIdToSongModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -335,6 +343,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="pager\first.png" />
+    <Content Include="pager\last.png" />
+    <Content Include="pager\next.png" />
+    <Content Include="pager\pager.css" />
+    <Content Include="pager\prev.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -361,6 +374,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
+    <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -372,12 +387,15 @@
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tablesorter\jquery.tablesorter.combined.js" />
-    <Content Include="Scripts\tablesorter\jquery.tablesorter.combined.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="sorter\asc.gif" />
+    <Content Include="sorter\bg.gif" />
+    <Content Include="sorter\desc.gif" />
+    <Content Include="sorter\style.css" />
+    <Content Include="tablesorter.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -525,6 +543,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803292029241_AddedArtistNameToSongModel.resx">
       <DependentUpon>201803292029241_AddedArtistNameToSongModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803312227468_AddedAlbumNameColumnInSongModel.resx">
+      <DependentUpon>201803312227468_AddedAlbumNameColumnInSongModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803312233524_AddedAlbum_SpotIdToSongModel.resx">
+      <DependentUpon>201803312233524_AddedAlbum_SpotIdToSongModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

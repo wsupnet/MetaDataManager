@@ -59,11 +59,13 @@ namespace MetaDataManager.Controllers
                                 Name = track.Name,
                                 AlbumId = album.Id,
                                 Artist_Name = track.Artists[0].Name,
+                                Album_Name = album.Name,
                                 Track_Number = track.TrackNumber,
                                 Duration = track.DurationMs,
                                 Preview_Url = track.PreviewUrl,
                                 Disc_Number = track.DiscNumber,
-                                Spotify_Id = track.Id
+                                Spotify_Id = track.Id,
+                                Album_SpotId = album.Spotify_Id
                             };
                             model.Add(tempModel);
                         };

@@ -24,11 +24,15 @@ namespace MetaDataManager
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquerytable").Include(
-                       "~/Scripts/jquery.tablesorter.js"));
+                       "~/Scripts/jquery.tablesorter.pager.js",
+                       "~/Scripts/jquery.tablesorter.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/sorter/css").Include(
+                      "~/sorter/style.css"));
         }
     }
 }
