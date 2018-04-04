@@ -22,7 +22,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Albums
-        public ActionResult Index(string songId, string albumId, int? page, string searchBy, string search, string sortBy, ArtistNameModel artistNameModel)
+        public ActionResult Index(string searchBy, string search, string sortBy, ArtistNameModel artistNameModel)
         {
 
             if (ModelState.IsValid)
@@ -136,10 +136,7 @@ namespace MetaDataManager.Controllers
 
                 }
 
-                //int pageSize = 5;
-                //int pageNumber = (page ?? 1);
                 //returns the List we made referencing the Spotify_Id of the album
-                //return View(model.ToPagedList(pageNumber, pageSize));
                 return View(albums.ToList());
                 //return View(model);
             }
@@ -284,19 +281,6 @@ namespace MetaDataManager.Controllers
 
         public ActionResult FullData()
         {
-            /*
-             var entryPoint = (from ep in dbContext.tbl_EntryPoint
-                                 join e in dbContext.tbl_Entry on ep.EID equals e.EID
-                                 join t in dbContext.tbl_Title on e.TID equals t.TID
-                                 where e.OwnerID == user.UID
-                                 select new {
-                                     UID = e.OwnerID,
-                                     TID = e.TID,
-                                     Title = t.Title,
-                                     EID = e.EID
-                                 }).Take(10);
-             */
-
             var model = (from artist in db.Artists
                          join album in db.Albums on artist.Name equals album.Artist_Name
                          join song in db.Songs on album.Artist_Name equals song.Artist_Name

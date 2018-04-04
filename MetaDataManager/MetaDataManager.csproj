@@ -176,13 +176,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
-    <Compile Include="Controllers\AlbumViewModelController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
-    <Compile Include="Controllers\FullInfoViewModelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
-    <Compile Include="Controllers\SongViewModelController.cs" />
     <Compile Include="Data\MetaDataManagerContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -319,6 +316,10 @@
     <Compile Include="Migrations\201803312233524_AddedAlbum_SpotIdToSongModel.Designer.cs">
       <DependentUpon>201803312233524_AddedAlbum_SpotIdToSongModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804040115128_ChangedDurationToAStringinSongs.cs" />
+    <Compile Include="Migrations\201804040115128_ChangedDurationToAStringinSongs.Designer.cs">
+      <DependentUpon>201804040115128_ChangedDurationToAStringinSongs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -326,9 +327,6 @@
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AlbumViewModel.cs" />
-    <Compile Include="ViewModel\FullInfoViewModel.cs" />
-    <Compile Include="ViewModel\SongViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -425,7 +423,6 @@
     <Content Include="Views\Songs\Details.cshtml" />
     <Content Include="Views\Songs\Edit.cshtml" />
     <Content Include="Views\Songs\Index.cshtml" />
-    <Content Include="Views\AlbumViewModel\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -435,14 +432,12 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\SongViewModel\Index.cshtml" />
     <Content Include="Views\Playlists\Create.cshtml" />
     <Content Include="Views\Playlists\Delete.cshtml" />
     <Content Include="Views\Playlists\Details.cshtml" />
     <Content Include="Views\Playlists\Edit.cshtml" />
     <Content Include="Views\Playlists\Index.cshtml" />
     <Content Include="Views\Shared\_PartialAlbumTable.cshtml" />
-    <Content Include="Views\FullInfoViewModel\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -549,6 +544,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803312233524_AddedAlbum_SpotIdToSongModel.resx">
       <DependentUpon>201803312233524_AddedAlbum_SpotIdToSongModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804040115128_ChangedDurationToAStringinSongs.resx">
+      <DependentUpon>201804040115128_ChangedDurationToAStringinSongs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

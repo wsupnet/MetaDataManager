@@ -12,6 +12,7 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
+using PagedList;
 
 namespace MetaDataManager.Controllers
 {
@@ -20,7 +21,7 @@ namespace MetaDataManager.Controllers
         private MetaDataManagerContext db = new MetaDataManagerContext();
 
         // GET: Songs
-        public ActionResult Index(int? albumId)
+        public ActionResult Index(int? albumId, int? page)
         {
             List<Song> model = new List<Song>();
 
@@ -54,6 +55,11 @@ namespace MetaDataManager.Controllers
 
                         foreach (var track in getTrack.Items)
                         {
+                            TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                            string trackTime = string.Format("{0:D2}:{1:D2}",
+                                                    t.Minutes,
+                                                    t.Seconds);
+
                             var tempModel = new Song
                             {
                                 Name = track.Name,
@@ -61,7 +67,7 @@ namespace MetaDataManager.Controllers
                                 Artist_Name = track.Artists[0].Name,
                                 Album_Name = album.Name,
                                 Track_Number = track.TrackNumber,
-                                Duration = track.DurationMs,
+                                Duration = trackTime,
                                 Preview_Url = track.PreviewUrl,
                                 Disc_Number = track.DiscNumber,
                                 Spotify_Id = track.Id,
@@ -74,13 +80,17 @@ namespace MetaDataManager.Controllers
                 }
                 if (albumId == null)
                 {
-                    return View(model.ToList());
+                    int pageSize = 1000;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
                 }
                 else
                 {
-                    return View(model.Where(x => x.AlbumId == albumId).ToList());
+                    int pageSize = 1000;
+                    int pageNumber = (page ?? 1);
+                    return View(model.Where(x => x.AlbumId == albumId).ToPagedList(pageNumber, pageSize));
+                    //return View(model.Where(x => x.AlbumId == albumId).ToList());
                 }
-
             }
 
             return View();

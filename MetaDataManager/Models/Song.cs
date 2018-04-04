@@ -17,7 +17,7 @@ namespace MetaDataManager.Models
 
         public int Track_Number { get; set; }
 
-        public int Duration { get; set; }
+        public string Duration { get; set; }
 
         public string Preview_Url { get; set; }
 

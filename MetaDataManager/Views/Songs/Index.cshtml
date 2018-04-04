@@ -1,16 +1,36 @@
-﻿@model IEnumerable<MetaDataManager.Models.Song>
+﻿@*@model IEnumerable<MetaDataManager.Models.Song>*@
+@model PagedList.IPagedList<MetaDataManager.Models.Song>
+
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Song list</h2>
+@if (Model.Count == 1)
+{
+    <h2>Type: Single</h2>
+}
+else if (Model.Count <= 9)
+{
+    <h2>Type: Extended Play (EP)</h2>
+    <p>@Model.TotalItemCount Song(s)</p>
+}
+else if (Model.Count <= 50)
+{
+    <h2>Type: Full Album</h2>
+    <p>@Model.TotalItemCount Song(s)</p>
+}
+else
+{
+    <h2>My Song list</h2>
+    <p>@Model.TotalItemCount Song(s)</p>
+}
 
-<p>
+@*<p>
     <button type="button" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Create New", "Create", new { albumId = ViewBag.AlbumId })
     </button>
-</p>
+</p>*@
 
 <table id="songList" class="table tablesorter" border="1">
     <thead>
@@ -68,3 +88,22 @@
 <button type="button" class="btn btn-default btn-font-black">
     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span><a href="javascript:history.back()">Back to List</a>
 </button>
+
+@section scripts {
+    <script>
+        function findMillisecond(number) {
+            var factor = Math.pow(10, 2);
+            return Math.round(number * factor) / factor;
+        }
+
+        function findMillisecond(number) {
+            var seconds = number / 1000;
+            var minutes = seconds / 60;
+
+            var factor = Math.pow(10, 2);
+
+            return Math.ceil(minutes * factor) / factor;
+        }
+    </script>
+    
+    }

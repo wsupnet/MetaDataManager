@@ -98,7 +98,7 @@
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div>
                     <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">
-                        <img class="hoverable" width="180" height="180" style=" border-radius: 10px; border: 1px solid black;" src="@Html.DisplayFor(modelitem => item.Image)" />
+                        <img class="hoverable" data-toggle="tooltip" title="@Html.DisplayFor(modelitem => item.Artist_Name)" width="180" height="180" style=" border-radius: 10px; border: 1px solid black;" src="@Html.DisplayFor(modelitem => item.Image)" />
                     </a>
                     <div class="caption">
                         <div style="width: 182.7px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;"><a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">@Html.DisplayFor(modelitem => item.Name)</a></div>
@@ -119,7 +119,7 @@
     </div>
 </div>
 
-<table id="detailView" class="table table-hover tablesorter" style="display: none" >
+<table id="detailView" class="table tablesorter" style="display: none" >
     <thead>
         <tr>
             <th></th>
@@ -130,7 +130,7 @@
                 Artist@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Artist_Name)</span></h4>*@
             </th>
             <th>
-                No. of Tracks@*<h4><span class="label label-default">No. of @Html.DisplayNameFor(model => model.Tracks)</span></h4>*@
+                # of Tracks@*<h4><span class="label label-default">No. of @Html.DisplayNameFor(model => model.Tracks)</span></h4>*@
             </th>
             <th>
                 Record Label@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Label)</span></h4>*@
@@ -138,6 +138,7 @@
             <th>
                 Release Date@*<h4><span class="label label-default">@Html.DisplayNameFor(model => model.Release_Date)</span></h4>*@
             </th>
+            <th></th>
         </tr>
     </thead>
     
