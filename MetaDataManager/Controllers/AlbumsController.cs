@@ -135,7 +135,6 @@ namespace MetaDataManager.Controllers
                         break;
 
                 }
-
                 //returns the List we made referencing the Spotify_Id of the album
                 return View(albums.ToList());
                 //return View(model);

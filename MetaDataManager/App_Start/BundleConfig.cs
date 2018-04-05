@@ -29,7 +29,9 @@ namespace MetaDataManager
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/ihover.css",
+                      "~/Content/ihiver.min.css"));
 
             bundles.Add(new StyleBundle("~/sorter/css").Include(
                       "~/sorter/style.css"));

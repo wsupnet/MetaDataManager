@@ -2,20 +2,20 @@
 @model IEnumerable<MetaDataManager.Models.Album>
 @*@model PagedList.IPagedList<MetaDataManager.Models.Album>*@
 
-
 @{
     ViewBag.Title = "Index";
 }
 
-<br/>
 <div>
     <form method="POST">
         <!--Song Name Form Box-->
         <div class="form-group">
-            <label for="SongName">Search for an Album</label>
-            <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album" />
-            <br />
-            <button class="btn btn-primary" type="submit">Search</button>
+            <label for="SongName"></label>
+            <div class="input-group">
+                <span class="input-group-addon" id="searchGlyph"><span class="glyphicon glyphicon-search"></span></span>
+                <input type="text" id="SongName" name="SongName" class="form-control" placeholder="Search for album, EP or Single" aria-describedby="searchGlyph" />
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
         </div>
     </form>
 </div>
@@ -34,8 +34,6 @@
                     </th>
                 </tr>
             </thead>
-
-
             @foreach (var album in (dynamic)ViewData["Songs"])
             {
 
@@ -49,14 +47,14 @@
                             <td><a target="_blank" href="https://open.spotify.com/album/@album.Id">@album.Name</a></td>
                             <td>
                                 <button type="button" class="btn btn-primary btnAddAlbum" albumId="@album.Id" albumName="@album.Name">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumSpotId = album.Id, albumName = album.Name})
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>@Html.ActionLink("Add", "Add", new { albumSpotId = album.Id, albumName = album.Name })
                                 </button>
                             </td>
                         }
                     }
                 </tr>  
-             }
-
+            }
+            
         </table>
     </div>
 }
@@ -73,7 +71,7 @@
 <button type="button" class="btn btn-primary" id="toggleView">Details</button>
 </div>
 
-@*<div id="partialAlbumTable"></div>*@
+@*<div id="partialNoSearchFound"></div>*@
 
 <p>
     @using (@Html.BeginForm("Index", "Albums", FormMethod.Get))
@@ -95,7 +93,36 @@
     <div class="row">
         @foreach (var item in Model)
             {
-            <div class="col-xs-6 col-sm-4 col-md-3">
+            <div class="col-xs-6 col-sm-4 col-md-3" style="padding-bottom:0.5em;">
+                <div class="ih-item square effect9 right_to_left">
+                    <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">
+                        <div class="img"><img class="hoverable" data-toggle="tooltip" title="@Html.DisplayFor(modelitem => item.Artist_Name)" src="@Html.DisplayFor(modelitem => item.Image)" /></div>
+                        <div class="info">
+                            <div class="info-back">
+                                <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                                <p>by @Html.DisplayFor(modelItem => item.Artist_Name)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @*<div style="display: block;">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</div>
+                @Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })*@
+                <div class="dropdown" style=" padding-bottom: 0.5em; padding-top: 0.5em;">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+                        <li>@Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })</li>
+                    </ul>
+                </div>
+                @*<span id="buttonInline">
+                    <button class="btn btn-warning">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>
+                    <button class="btn btn-info">@Html.ActionLink("See Tracks", "SeeTracks", new { albumId = item.Id })</button>
+                </span>*@
+            </div>
+
+            @*<div class="col-xs-6 col-sm-4 col-md-3">
                 <div>
                     <a target="_blank" href="https://open.spotify.com/album/@item.Spotify_Id">
                         <img class="hoverable" data-toggle="tooltip" title="@Html.DisplayFor(modelitem => item.Artist_Name)" width="180" height="180" style=" border-radius: 10px; border: 1px solid black;" src="@Html.DisplayFor(modelitem => item.Image)" />
@@ -114,7 +141,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>*@
             }
     </div>
 </div>
@@ -192,6 +219,7 @@
                 </tr>
                 }
             </tbody>
+
         }
             
 </table>
@@ -201,6 +229,8 @@
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>@Html.ActionLink("Back to Artist list", "Index", "Artists")
     </button>
 </p>
+
+
 
 @section scripts{
     <script>

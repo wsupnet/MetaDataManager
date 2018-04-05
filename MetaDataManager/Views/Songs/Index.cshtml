@@ -8,22 +8,22 @@
 
 @if (Model.Count == 1)
 {
-    <h2>Type: Single</h2>
+    <h4>Type: Single</h4>
 }
 else if (Model.Count <= 9)
 {
-    <h2>Type: Extended Play (EP)</h2>
-    <p>@Model.TotalItemCount Song(s)</p>
+    <h4>Contains: @Model.TotalItemCount Songs</h4>
+    <h4>Type: Extended Play (EP)</h4>
 }
 else if (Model.Count <= 50)
 {
-    <h2>Type: Full Album</h2>
-    <p>@Model.TotalItemCount Song(s)</p>
+    <h4>Contains: @Model.TotalItemCount Songs</h4>
+    <h4>Type: Full Album</h4>
 }
 else
 {
     <h2>My Song list</h2>
-    <p>@Model.TotalItemCount Song(s)</p>
+    <h4>Contains: @Model.TotalItemCount Songs</h4>
 }
 
 @*<p>
@@ -45,8 +45,8 @@ else
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
+            @foreach (var item in Model)
+            {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Track_Number)
@@ -79,7 +79,7 @@ else
                 </td>
                 }
             </tr>
-        }
+             }
     </tbody>
 </table>
 

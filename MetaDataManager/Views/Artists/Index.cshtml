@@ -12,10 +12,11 @@
 
     <!--Artist Name Form Box-->
     <div class="form-group">
-        <label for="ArtistName">Search for an Artist to add to your list</label>
-        <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist">
-        <br />
-        <button class="btn btn-primary btn-inline" type="submit">Search</button>
+        <div class="input-group">
+            <span class="input-group-addon" id="searchGlyph"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" name="ArtistName" id="ArtistName" class="form-control" placeholder=" Search for an Artist" aria-describedby="searchGlyph">
+            <button class="btn btn-primary btn-inline" type="submit">Search</button>
+        </div>
     </div>
 </form>
 
